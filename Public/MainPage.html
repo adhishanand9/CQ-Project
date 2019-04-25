@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="MainPage.css">
+    <title></title>
+  <body>
+    <div id=header>
+
+      <div id='div1' class='d1'>
+        <a href="#"><strong>CQ</strong></a>
+        <span style="cursor:pointer;" ondblclick="functionNav()">
+      </div>
+      <div class="navbar"></div>
+      <div class="navbar"></div>
+      <div class="navbar"></div>
+    </div>
+
+
+    <div id='div2' class='d2'>
+    <a href="#">CQ</a>
+    <a href="#">Home</a>
+    <a href="#">Add User</a>
+    <a href="#">Community List</a>
+    <a href="#">Switch As User</a>
+    <a href="#">Tag Panel</a>
+    <a href="#">Change Password</a>
+    <a href="#">Logout</a>
+    <div>
+
+  </body>
+<script>
+  function functionNav(){
+    var div2=document.getElementById("div2");
+    if(div2.style.width=='')
+     div2.style.width='px';
+    else
+      div2.style.width='';
+  }
+</script>
+</html>
