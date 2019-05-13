@@ -1,27 +1,4 @@
 body{
-background: #fff;
-padding:0;
-margin:0;
-overflow-x: hidden;
-font-family: 'Roboto', sans-serif;
-}
-
-.navbar{
-  width: 35px;
-  height: 4px;
-  background-color: white;
-  margin: 6px 0;
-}
-
-#header{
-    height: 8vh;
-    width: 100vw;
-    line-height: 9vh;
-    box-shadow: 0px 1px 10px 0px rgb(150, 150, 150);
-    background-color: #1E394A;
-}
-#div1{
-  margin-top: 2px;
-  color:white;
-  float:right;
+    padding:0;
+    margin:0;
 }

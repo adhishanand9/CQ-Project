@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/adhishanand9/CQ-Project/issues"
   },
-  "homepage": "https://github.com/adhishanand9/CQ-Project#readme"
+  "homepage": "https://github.com/adhishanand9/CQ-Project#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "jquery-confirm": "^3.3.4"
+  }
+
 }
