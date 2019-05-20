@@ -4,7 +4,7 @@ var app = express();
 var session = require('express-session');
 
 //Access Static files
-app.use(express.static(path.join(__dirname,'Public')));
+app.use(express.static(path.join(__dirname,'public')));
 app.set('view engine', 'ejs');
 
 //BodyParser
@@ -29,7 +29,7 @@ var userSchema = mongoose.Schema({
 	email: String,
 	password: String,
 	city: String,
-	phoneno: String,
+	phoneno: String, 
 	gender: String,
 	dob: String,
 	role: String
@@ -73,12 +73,13 @@ app.get('/tag',function(req,res){
 });
 
 app.get('/',function(req,res){
+    console.log(req.body);
     if(req.session.isLogin){
         console.log("Already Logged in");
         res.render('homepage',{data: req.session.data});
     } else {
         console.log("New User");
-        res.sendFile(path.join(__dirname,'Public','Login.html'));
+        res.sendFile(path.join(__dirname,'public','login.html'));
     }
 });
 
@@ -97,7 +98,7 @@ app.put('/changePassword',function(req,res){
         {
             _id: req.body._id,
             password: req.body.oldPassword  // search query
-        },
+        }, 
         {
           password: req.body.newPassword   // field:values to update
         },
@@ -123,7 +124,7 @@ app.post('/admin/adduser',function (req, res) {
 	    email: req.body.email,
 	    password: req.body.password,
 	    city: req.body.city,
-	    phoneno: req.body.phoneno,
+	    phoneno: req.body.phoneno, 
 	    gender: "male",
 	    dob: "11/08/1999",
 	    role: "admin"
@@ -137,7 +138,7 @@ app.post('/admin/adduser',function (req, res) {
        console.error(err)
        res.send(error)
      })
-
+    
   })
 
 app.listen(8000);
