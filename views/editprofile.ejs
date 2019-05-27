@@ -91,7 +91,7 @@
 </head>
 <body>
     <% include partials/menu.html %>
-    Hello World
+    
 </body>
 <script>
     var menu = document.getElementById("menu");
@@ -102,11 +102,11 @@
     for(var i=0;i<div.length;i++){
         div[i].classList.remove("active");
     }
-    
+
     div[1].classList.add("active");
 
     var profile_button = document.getElementById("profile_button");
-    
+
     //Buttons on Left Navigation Drawer
     var profile_button_left = document.getElementById('profile_button_left');
     var add_user_button_left = document.getElementById('add_user_button_left');
@@ -116,7 +116,7 @@
     var tag_panel_button = document.getElementById('tag_panel_button');
     var change_password_button = document.getElementById('change_password_button');
     var logout_button = document.getElementById('logout_button');
-    
+
 
 	sideBtn.addEventListener("click", function () {
 		if(menu.style.width == '300px') {
@@ -157,7 +157,7 @@
     tag_panel_button.addEventListener("click",function(event){
         window.location = '/tag';
     });
-    
+
     user_list_button.addEventListener("click",function(event){
         window.location = '/<%=data[0].role%>/userlist';
     });

@@ -10,18 +10,18 @@ loginBtn.addEventListener('click',function(event){
         userdata.passWord = passWord.value;
         console.log(userdata);
         var request = new XMLHttpRequest();
-        request.open("POST",'/login');
+        request.open("POST",'/Login');
         request.setRequestHeader("Content-Type","application/json");
         request.send(JSON.stringify(userdata));
         request.onload = function(){
             var dataReturned = JSON.parse(request.responseText);
             if(dataReturned.length==""){
-                alert('User not exist');
+                alert('User Does Not Exist.');
                 userName.value="";
                 passWord.value="";
             } else {
                 console.log(dataReturned);
-                location.href = "/home"
+                window.location ="/profile";
             }
         }
     }
