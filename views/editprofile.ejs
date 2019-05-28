@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>editProfile</title>
+    <title>CQ</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -91,7 +91,7 @@
 </head>
 <body>
     <% include partials/menu.html %>
-    
+
 </body>
 <script>
     var menu = document.getElementById("menu");
@@ -161,6 +161,10 @@
     user_list_button.addEventListener("click",function(event){
         window.location = '/<%=data[0].role%>/userlist';
     });
+    community_list_button.addEventListener("click",function(event){
+        window.location = '/communtiy/communitylist';
+    });
+
 
 </script>
 </html>

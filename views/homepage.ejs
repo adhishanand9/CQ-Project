@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dashboard</title>
+    <title>CQ</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
@@ -180,11 +180,11 @@
     for(var i=0;i<div.length;i++){
         div[i].classList.remove("active");
     }
-    
+
     div[1].classList.add("active");
 
     var profile_button = document.getElementById("profile_button");
-    
+
     //Buttons on Left Navigation Drawer
     var profile_button_left = document.getElementById('profile_button_left');
     var add_user_button_left = document.getElementById('add_user_button_left');
@@ -223,7 +223,7 @@
     profile_button_left.addEventListener("click",function(event){
         window.location = '/<%= data[0].role%>/profile'
     });
-    
+
     change_password_button.addEventListener('click',function(event){
         window.location = '/changePassword';
     });
@@ -238,6 +238,9 @@
 
     user_list_button.addEventListener("click",function(event){
         window.location = '/<%=data[0].role%>/userlist';
+    });
+    community_list_button.addEventListener("click",function(event){
+        window.location = '/communtiy/communitylist';
     });
 
     logout_button.addEventListener("click",function(event){

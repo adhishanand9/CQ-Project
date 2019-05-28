@@ -72,6 +72,10 @@ app.get('/tag',function(req,res){
     res.render('tag',{data: req.session.data});
 });
 
+app.get('/communtiy/communityList',function(req,res){
+    res.render('communitylist',{data: req.session.data});
+});
+
 app.get('/',function(req,res){
     console.log(req.body);
     if(req.session.isLogin){

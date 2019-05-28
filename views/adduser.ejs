@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AddUser</title>
+    <title>CQ</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -185,11 +185,11 @@
     for(var i=0;i<div.length;i++){
         div[i].classList.remove("active");
     }
-    
+
     div[2].classList.add("active");
 
     var profile_button = document.getElementById("profile_button");
-    
+
     //Buttons on Left Navigation Drawer
     var profile_button_left = document.getElementById('profile_button_left');
     var add_user_button_left = document.getElementById('add_user_button_left');
@@ -251,6 +251,10 @@
     user_list_button.addEventListener("click",function(event){
         window.location = '/<%=data[0].role%>/userlist';
     });
+    community_list_button.addEventListener("click",function(event){
+        window.location = '/communtiy/communitylist';
+    });
+
 
 </script>
 </html>
