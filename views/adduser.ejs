@@ -254,6 +254,31 @@
     community_list_button.addEventListener("click",function(event){
         window.location = '/communtiy/communitylist';
     });
+    logout_button.addEventListener("click",function(event){
+        $.confirm({
+            title: 'Confirm Logout',
+            boxWidth: '20%',
+            theme: 'supervan',
+            backgroundDismissAnimation: 'random',
+            useBootstrap: false,
+            content: 'Do you really want logout?',
+            buttons: {
+                Yes: function () {
+                // $.alert('Yes');
+                var data = new Object();
+                data.logout = 1;
+                var request = new XMLHttpRequest();
+                request.open("POST",'/logout');
+                request.setRequestHeader("Content-Type","application/json");
+                request.send(JSON.stringify(data));
+                },
+                No: function () {
+                // $.alert('No');
+                }
+            }
+        });
+    });
+
 
 
 </script>
