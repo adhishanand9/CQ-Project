@@ -6,7 +6,7 @@ var session = require('express-session');
 //Access Static files
 app.use(express.static(path.join(__dirname,'Public')));
 app.set('view engine', 'ejs');
-
+app.use( express.static( "Public" ) );
 //BodyParser
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
