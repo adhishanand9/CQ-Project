@@ -2,7 +2,15 @@ var express = require('express')
 var path = require('path');
 var app = express();
 var session = require('express-session');
-
+var nodemailer = require("nodemailer");
+var smtpTransport = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    auth: {
+        user: "adhishanand9@gmail.com",
+        pass: "thebatman@0087"
+    }
+});
 //Access Static files
 app.use(express.static(path.join(__dirname,'Public')));
 app.set('view engine', 'ejs');
@@ -95,6 +103,8 @@ app.get('/editProfile',function(req,res){
     res.render('editprofile',{data: req.session.data});
 })
 
+
+
 //Function to update the password
 app.put('/changePassword',function(req,res){
     console.log(req.body);
@@ -142,6 +152,21 @@ app.post('/admin/adduser',function (req, res) {
        console.error(err)
        res.send(error)
      })
+     var mailOptions={
+         to : req.body.email,
+         subject : "Welcome to CQ",
+         text : "Welcome to CQ and your password is "+req.body.password+"."
+     }
+     console.log(mailOptions);
+     smtpTransport.sendMail(mailOptions, function(error, response){
+      if(error){
+             console.log(error);
+         res.end("error");
+      }else{
+             console.log("Message sent: " + response.message);
+         res.end("sent");
+          }
+ });
 
   })
 

@@ -157,7 +157,7 @@
     <div id="body_internal_div">
         <div id="adduser_heading"><h1>Add User</h1></div>
         <div id="adduser_form_div">
-            <form action="/<%=data[0].role%>/adduser" method="post">
+            <form action="/<%=data[0].role%>/adduser" method="post" id="form1">
                 <input type="text"  id="name" required name="name" placeholder="Name">
                 <input type="text" id="email" required name="email" placeholder="Email">
                 <input type="text" id="password" required name="password" placeholder="User Password">
@@ -185,7 +185,9 @@
     for(var i=0;i<div.length;i++){
         div[i].classList.remove("active");
     }
-
+    var mail = document.getElementById("email");
+    var m=mail.innerHTML;
+    console.log(m);
     div[2].classList.add("active");
 
     var profile_button = document.getElementById("profile_button");
@@ -233,8 +235,17 @@
         window.location = '/<%= data[0].role%>/profile'
     });
 
-    add_user_button.addEventListener("click",function(event){
+    
+    $(document).ready(function(){
+    var from,to,subject,text;
+    $("#add_user_button").click(function(){
+        to=document.getElementById("form1").elements["email"].value;
+        subject="New Registration";
+        text="Thanks for registering with CodeQuotient";
+        $.get("http://localhost:3000/send",{to:to,subject:subject,text:text},function(data){
+        });
     });
+});
 
     change_password_button.addEventListener('click',function(event){
         window.location = '/changePassword';
