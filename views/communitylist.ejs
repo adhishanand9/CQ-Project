@@ -249,6 +249,24 @@
       user_list_button.addEventListener("click",function(event){
           window.location = '/<%=data[0].role%>/userlist';
       });
+      logout_button.addEventListener("click",function(event){
+          $.confirm({
+              title: 'Confirm Logout',
+              boxWidth: '20%',
+              theme: 'supervan',
+              // backgroundDismissAnimation: 'random',
+              useBootstrap: false,
+              content: 'Do you really want logout?',
+              buttons: {
+                  Yes: function () {
+                      window.location = '/logout';
+                  },
+                  No: function () {
+                  // $.alert('No');
+                  }
+              }
+          });
+      });
 
   </script>
 

@@ -67,8 +67,9 @@ app.post('/Login',function(req,res){
 const storage = multer.diskStorage({
     destination: './Public/uploads',
     filename: function (req, file, cb) {
+      console.log(req.session.data[0]._id);
         // null as first argument means no error
-        cb(null, Date.now() + '-' + file.originalname )
+        cb(null, req.session.data[0].email )
     }
 })
 const upload = multer({
@@ -81,16 +82,15 @@ const upload = multer({
     }
 }).single('files')
 app.post('/upload', (req, res) => {
-    // res.send('done');
-    //console.log(req.body.email)
     upload(req, res, (err) => {
         if (err){
             res.render('editprofile',{data: req.session.data})
+            console.log("File Not Uploaded Due To Error")
         }else{
             // If file is not selected
             if (req.file == undefined) {
                 res.render('editprofile', {data: req.session.data})
-
+                console.log("File Not Uploaded")
             }
             else{
                 res.render('editprofile', {data: req.session.data})

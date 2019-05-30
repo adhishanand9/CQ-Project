@@ -233,7 +233,7 @@
           width: auto;
         }
 
-        
+
 
 
     </style>
@@ -272,7 +272,7 @@
             <label id="gender_label">Gender: </label>
             <select id="select_gender" name="role">
                 <option selected="true" disabled="disabled">Select Gender</option>
-                <option value="male">Male</option>
+                <option value="male" selected>Male</option>
                 <option value="female">Female</option>
                 <option value="transgender">Transgender</option>
             </select>
@@ -325,6 +325,12 @@
     var change_password_buttonn = document.getElementById('change_password_buttonn');
     var cancel_button = document.getElementById('cancel_button');
     var update_button = document.getElementById('update_button');
+    var profile_picture=document.getElementById('profile_pic');
+
+  //  profile_picture.addEventListener('click',function(event){
+      profile_picture.src="/uploads/"+'<%= data[0].email%>';
+
+    //});
 
     $(document).ready(function(){
       $("#sideBtn").click(function(){
