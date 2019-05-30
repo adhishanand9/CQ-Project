@@ -19,7 +19,7 @@
   "homepage": "https://github.com/adhishanand9/CQ-Project#readme",
   "dependencies": {
     "ejs": "^2.6.1",
-    "jquery-confirm": "^3.3.4"
+    "jquery-confirm": "^3.3.4",
+    "multer": "^1.4.1"
   }
-
 }

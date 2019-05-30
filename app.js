@@ -3,6 +3,8 @@ var path = require('path');
 var app = express();
 var session = require('express-session');
 var nodemailer = require("nodemailer");
+var multer=require('multer');
+//var popups = require('popups');
 var smtpTransport = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
@@ -31,7 +33,7 @@ mongoose.connect(mongoDb, function (error) {
 	}
 	console.log("Db opened Successfully");
 });
-
+mongoose.set('useFindAndModify', false);
 var userSchema = mongoose.Schema({
 	name: String,
 	email: String,
@@ -40,7 +42,9 @@ var userSchema = mongoose.Schema({
 	phoneno: String,
 	gender: String,
 	dob: String,
-	role: String
+	role: String,
+  status:String,
+  flag: String,
 });
 
 var userdetails = mongoose.model("userdetails", userSchema);
@@ -60,8 +64,62 @@ app.post('/Login',function(req,res){
     });
 });
 
+const storage = multer.diskStorage({
+    destination: './Public/uploads',
+    filename: function (req, file, cb) {
+        // null as first argument means no error
+        cb(null, Date.now() + '-' + file.originalname )
+    }
+})
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 1000000
+    },
+    fileFilter: function (req, file, cb) {
+        sanitizeFile(file, cb);
+    }
+}).single('files')
+app.post('/upload', (req, res) => {
+    // res.send('done');
+    //console.log(req.body.email)
+    upload(req, res, (err) => {
+        if (err){
+            res.render('editprofile',{data: req.session.data})
+        }else{
+            // If file is not selected
+            if (req.file == undefined) {
+                res.render('editprofile', {data: req.session.data})
+
+            }
+            else{
+                res.render('editprofile', {data: req.session.data})
+                //console.log(email)
+                console.log("File Uploaded Successfully")
+            }
+        }
+
+    })
+})
+function sanitizeFile(file, cb) {
+    // Define the allowed extension
+    let fileExts = ['png', 'jpg', 'jpeg', 'gif']
+    // Check allowed extensions
+    let isAllowedExt = fileExts.includes(file.originalname.split('.')[1].toLowerCase());
+    // Mime type must be an image
+    let isAllowedMimeType = file.mimetype.startsWith("image/")
+    if(isAllowedExt && isAllowedMimeType){
+        return cb(null ,true) // no errors
+    }
+    else{
+        // pass error msg to callback, which can be displaye in frontend
+        cb('Error: File type not allowed!')
+    }
+}
 app.get("/admin/userlist",function(req,res){
+    userdetails.find({}).exec(function(error,data){
     res.render('userlist',{data: req.session.data});
+    });
 });
 
 app.get("/admin/profile", function(req, res) {
@@ -83,6 +141,10 @@ app.get('/tag',function(req,res){
 app.get('/communtiy/communityList',function(req,res){
     res.render('communitylist',{data: req.session.data});
 });
+app.get('/logout',function(req,res){
+    req.session.isLogin = 0;
+    res.redirect('/');
+});
 
 app.get('/',function(req,res){
     console.log(req.body);
@@ -94,7 +156,7 @@ app.get('/',function(req,res){
         res.sendFile(path.join(__dirname,'Public','Login.html'));
     }
 });
-
+//console.log(email);
 app.get('/profile',function(req,res){
     res.render('profile',{data: req.session.data});
 })
@@ -182,8 +244,10 @@ app.post('/admin/adduser',function (req, res) {
 	    city: req.body.city,
 	    phoneno: req.body.phoneno,
 	    gender: "male",
-	    dob: "11/08/1999",
-	    role: "admin"
+      dob: "11/08/1999",
+      role: req.body.role,
+      status: req.body.status,
+      flag: req.body.flag
     })
     newUser.save()
      .then(data => {

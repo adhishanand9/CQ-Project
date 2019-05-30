@@ -5,39 +5,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>CQ</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        *{
+            box-sizing: border-box;
+        }
         body {
 			margin: 0;
             padding: 0;
+            width:100%;
             background: #f5f5f5;
             font-family: 'Roboto', sans-serif;
 		}
 		nav {
+            position:fixed;
             width:100%;
-            height: 8vh;
+            height: 60px;
 			background-color: #222D3C;
             color: #fff;
+            z-index: 999999999;
 		}
 		nav p {
-			margin: 0;
-			font-size: 30px;
-			padding: 10px;
-			float: left;
+            margin: 0;
+            float: left;
+            height: 50px;
+            padding: 15px 15px;
+            font-size: 20px;
+            line-height: 20px;
+            font-weight: bold;
 		}
 		nav span {
+            float: right;
             padding: .2em .6em .3em;
+            margin-top: 22px;
+            margin-left: 5px;
             font-size: 75%;
-            font-weight: 500;
+            line-height: 1;
+            font-weight: 700;
             color: #fff;
-            margin-top: 2.5vh;
-            margin-left: 1vh;
             font-size: 14px;
             vertical-align: center;
             border-radius: .25em;
-            float: right;
+            vertical-align: baseline;
 		}
 		nav img {
 			float: right;
@@ -45,13 +59,14 @@
 			padding: 15px;
         }
 		#menu {
-			background-color: #000;
-			width: 50px;
-			transition-property: width;
-			transition-duration: 0.7s;
+            position:fixed;
+            padding-top: 60px;
+            background-color: #000;
+            width: 50px;
+            height:100vh;
+            color:white;
             box-sizing: border-box;
-            float: left;
-            height:92vh;
+            overflow:hidden;
 		}
 		.fa {
 			color: #fff;
@@ -61,15 +76,14 @@
 			margin-left: 11px;
 			box-sizing: border-box;
 		}
-		#menu span {
-			display: none;
-		}
 		.menu-item {
+            width: 250px;
 			cursor: pointer;
 			opacity: 0.8;
 			color: #fff;
 			font-family: sans-serif;
 			font-size: 14px;
+            padding-top: 10px;
 		}
 		.menu-item:hover {
 			border-left: 2px solid red;
@@ -83,12 +97,16 @@
         .active{
             background: #51a1e2 !important;
         }
+        #profile_button{
+            cursor: pointer;
+        }
         #body_internal_div{
-            width:40vw;
+            position: absolute;
+            left: 30%;
+            top: 10%;
+            width:40%;
             height: 570px;
             background: #fff;
-            margin-left: 31%;
-            margin-top: 2%;
             border: 5px solid rgba(0,0,0,0.1);
             color: #333;
             box-sizing: border-box;
@@ -157,7 +175,7 @@
     <div id="body_internal_div">
         <div id="adduser_heading"><h1>Add User</h1></div>
         <div id="adduser_form_div">
-            <form action="/<%=data[0].role%>/adduser" method="post" id="form1">
+            <form>
                 <input type="text"  id="name" required name="name" placeholder="Name">
                 <input type="text" id="email" required name="email" placeholder="Email">
                 <input type="text" id="password" required name="password" placeholder="User Password">
@@ -165,7 +183,7 @@
                 <input type="text" id="city" required name="city" placeholder="City">
                 <h3><label>Role:</label></h3>
                 <select id="selectrole" name="role">
-                    <option value="selectuserrole">Select User Role</option>
+                    <option selected="true" disabled="disabled">Select User Role</option>
                     <option value="user">User</option>
                     <option value="communitybuilder">Community Builder</option>
                     <option value="admin">Admin</option>
@@ -185,9 +203,7 @@
     for(var i=0;i<div.length;i++){
         div[i].classList.remove("active");
     }
-    var mail = document.getElementById("email");
-    var m=mail.innerHTML;
-    console.log(m);
+
     div[2].classList.add("active");
 
     var profile_button = document.getElementById("profile_button");
@@ -205,27 +221,18 @@
     //Add User Button and Cancel Button
     var add_user_button = document.getElementById("add_user_button");
     var cancel_button = document.getElementById("cancel_button");
-    // var role = document.getElementById("selectrole")[0].value;
 
-	sideBtn.addEventListener("click", function () {
-		if(menu.style.width == '300px') {
-            menu.style.width = '50px';
-            // body_internal_div.style.marginLeft = '12%';
-            // body_internal_div.style.marginTop = '2%';
-			for(var i = 0;i<span.length;i++) {
-				span[i].style.display = 'none';
-			}
-		} else {
-            menu.style.width = '300px';
-            // body_internal_div.style.marginLeft = '4%';
-            // body_internal_div.style.marginTop = '1.5%';
-			setTimeout(function () {
-				for(var i = 0;i<span.length;i++) {
-					span[i].style.display = 'inline';
-				}
-			}, 210);
-		}
-    })
+	$(document).ready(function(){
+      $("#sideBtn").click(function(){
+         if($("#menu").width() == 50){
+            $("#menu").animate({width: '250px'},400);
+            $("#body_internal_div").animate({left:'35%'},300);
+         } else{
+            $("#menu").animate({width: '50px'},400);
+            $("#body_internal_div").animate({left:'30%'},300);
+         }
+      });
+   });
 
     profile_button.addEventListener("click",function(event){
         window.location = '/profile'
@@ -235,17 +242,8 @@
         window.location = '/<%= data[0].role%>/profile'
     });
 
-    
-    $(document).ready(function(){
-    var from,to,subject,text;
-    $("#add_user_button").click(function(){
-        to=document.getElementById("form1").elements["email"].value;
-        subject="New Registration";
-        text="Thanks for registering with CodeQuotient";
-        $.get("http://localhost:3000/send",{to:to,subject:subject,text:text},function(data){
-        });
+    add_user_button.addEventListener("click",function(event){
     });
-});
 
     change_password_button.addEventListener('click',function(event){
         window.location = '/changePassword';
@@ -262,32 +260,52 @@
     user_list_button.addEventListener("click",function(event){
         window.location = '/<%=data[0].role%>/userlist';
     });
-    community_list_button.addEventListener("click",function(event){
-        window.location = '/communtiy/communitylist';
-    });
+
     logout_button.addEventListener("click",function(event){
         $.confirm({
             title: 'Confirm Logout',
             boxWidth: '20%',
             theme: 'supervan',
-            backgroundDismissAnimation: 'random',
+            // backgroundDismissAnimation: 'random',
             useBootstrap: false,
             content: 'Do you really want logout?',
             buttons: {
                 Yes: function () {
-                // $.alert('Yes');
-                var data = new Object();
-                data.logout = 1;
-                var request = new XMLHttpRequest();
-                request.open("POST",'/logout');
-                request.setRequestHeader("Content-Type","application/json");
-                request.send(JSON.stringify(data));
+                    window.location = '/logout';
                 },
                 No: function () {
                 // $.alert('No');
                 }
             }
         });
+    });
+
+    add_user_button.addEventListener('click',function(){
+        var userData = new Object();
+        userData.name = document.getElementById('name').value;
+        userData.email = document.getElementById('email').value;
+        userData.password = document.getElementById('password').value;
+        userData.phoneno = document.getElementById('phoneno').value;
+        userData.city = document.getElementById('city').value;
+        userData.role = document.getElementById('selectrole').value;
+        userData.status = 'pending';
+        userData.flag = 0;
+        var request = new XMLHttpRequest();
+        request.open('POST','/<%= data[0].role%>/adduser');
+        request.setRequestHeader('Content-Type','application/json');
+        request.send(JSON.stringify(userData));
+        request.onload = function(){
+            var dataReturned = request.responseText;
+            if(dataReturned==""||dataReturned==null){
+            alert('Error in Adding Details!!!');
+            window.location = '/<%= data[0].role%>/adduser';
+            }
+            else{
+                console.log(dataReturned);
+                alert('User added correctly');
+                window.location = '/<%= data[0].role%>/adduser';
+            }
+        }
     });
 
 
