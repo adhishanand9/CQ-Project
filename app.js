@@ -129,7 +129,49 @@ app.put('/changePassword',function(req,res){
             res.send(error)
           })
 });
-
+app.put('/updateUserDetails',function(req,res){
+    console.log(req.body);
+    userdetails.findOneAndUpdate(
+        {
+            _id: req.body._id,
+            email: req.body.email
+        },
+        {
+            name: req.body.name,
+            dob : req.body.dob,
+            gender: req.body.gender,
+            phoneno: req.body.phoneno,
+            city: req.body.city
+        },
+        {
+            new: true,
+            runValidators: true
+        })
+        .then(data=>{
+            console.log(data);
+            res.send(data);
+        })
+        .catch(err=>{
+            console.log('eror aya');
+            console.error(err);
+            res.send(error);
+        })
+});
+app.post('/getUserData',function(req,res){
+    console.log("hello world")
+    userdetails.countDocuments(function(error,count){
+        var start = parseInt(req.body.start);
+        var len = parseInt(req.body.length);
+        userdetails.find({}).skip(start).limit(len)
+        .then(data=>{
+            console.log(data)
+            res.send({"recordsTotal" : count, "recordsFiltered": count,data})
+        })
+        .catch(err=>{
+            res.send(err);
+        })
+    })
+});
 //Function to add in the database
 app.post('/admin/adduser',function (req, res) {
     console.log(req.body);
@@ -168,7 +210,7 @@ app.post('/admin/adduser',function (req, res) {
           }
  });
 
-  })
+});
 
 app.listen(8000);
 
