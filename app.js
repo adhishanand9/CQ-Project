@@ -260,7 +260,10 @@ app.put('/updateUserDetails',function(req,res){
             dob : req.body.dob,
             gender: req.body.gender,
             phoneno: req.body.phoneno,
-            city: req.body.city
+            city: req.body.city,
+            image:req.body.image,
+            status:req.body.status,
+            flag:req.body.flag
         },
         {
             new: true,
@@ -291,6 +294,30 @@ app.post('/getUserData',function(req,res){
         })
     })
 });
+//function to send mail
+app.post('/sendMail',function(req,res){
+  console.log(req.body);
+  var mailOptions={
+      to : req.body.to,
+      subject : req.body.subject,
+      text : req.body.text
+  }
+  console.log(mailOptions);
+  smtpTransport.sendMail(mailOptions, function(error, response){
+   if(error){
+          console.log(error);
+      res.end("error");
+   }else{
+          console.log("Message sent: " + response.message);
+      res.end("sent");
+       }
+});
+
+});
+app.post("/updateState", function (request, response) {
+	userdetails.updateOne({_id: request.body.id}, {flag: request.body.state}).exec(data => console.log("state updated"));
+	response.send("state updated");
+});
 //Function to add in the database
 app.post('/admin/adduser',function (req, res) {
     console.log(req.body);
@@ -304,7 +331,8 @@ app.post('/admin/adduser',function (req, res) {
 	    dob: "11/08/1999",
         role: req.body.role,
         status: req.body.status,
-        flag: req.body.flag
+        flag: req.body.flag,
+        image:req.body.image
     })
     newUser.save()
      .then(data => {

@@ -73,6 +73,11 @@ form{
     border-radius: 5px;
     cursor: pointer;
 }
+#login_button:hover{
+  background-color:blue;
+  transform:scale(1.1);
+  transition-duration: 200ms;
+}
 #sign_in_with_div{
     position: absolute;
     padding: 5px;
@@ -102,7 +107,7 @@ form{
 }
 #github_body_div:hover{
     background: rgb(210, 210, 210);
-    color: rgb(62, 167, 58);
+    color:blue;
     transform:scale(1.1);
     transition-duration: 200ms;
 }

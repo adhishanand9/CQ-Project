@@ -91,20 +91,20 @@
             margin-left:12%;
             margin-top: 2%;
             transition-duration: 700ms;
-            height: 600px;
+            height: 700px;
             width: 70%;
             border: 1px solid #eeeeee;
             box-shadow: 0px 1px 10px 0px rgb(201, 201, 201);
         }
         #body_internal_profile_div{
           width: 100%;
-          height:30%;
+          height:35%;
           line-height: 30%;
           position: relative;
         }
-        
+
         #fields_outer_div{
-            height:70%;
+            height:65%;
             width: 100%;
         }
         .outer_div{
@@ -141,7 +141,7 @@
         #profile_div{
           padding: 0;
           margin: 0;
-          height: 150px;
+          height: 190px;
           width: 150px;
           margin-left: 15px;
           margin-top: 15px;
@@ -153,7 +153,7 @@
 <body>
     <% include partials/menu.html %>
     <div id="body_internal_div">
-        <div id="body_internal_profile_div"><div class="body_profile_div" id="profile_div"><img src="/images/default.png" class="far fa-user" id="user_icon"></div></div>
+        <div id="body_internal_profile_div"><div class="body_profile_div" id="profile_div"><img src="/uploads/<%=data[0].image%>" class="far fa-user" id="user_icon"></div></div>
         <div id="fields_outer_div">
             <div class="outer_div">
                 <div class="div_inner_1"><span class="spans">Email</span></div>

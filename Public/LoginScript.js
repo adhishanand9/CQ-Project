@@ -23,7 +23,12 @@ loginBtn.addEventListener('click',function(event){
                 passWord.value="";
             } else {
                 console.log(dataReturned);
+                if(dataReturned[0].flag=='1')
                 window.location ="/profile";
+                else
+                {
+                  window.location="/editprofile";
+                }
             }
         }
     }

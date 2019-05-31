@@ -120,6 +120,7 @@
             margin:0;
             margin-bottom: 15px;
             width: 150px;
+            height: 180px;
             border: 1px solid #bbbbbb;
             box-shadow: 0px 1px 10px 0px rgb(210, 210, 210);
             border-radius: 3px;
@@ -129,7 +130,7 @@
             display: inline-block;
         }
         #profile_pic{
-            height: 150px;
+            height: 180px;
             width:150px;
         }
         #basic_info_div{
@@ -231,6 +232,7 @@
         }
         #exampleFormControlFile1{
           width: auto;
+          height: auto;
         }
 
 
@@ -243,7 +245,7 @@
     <div id="body_internal_div">
         <div id="profile_photo_div">
             <div id="profile_div">
-                <img src='/images/default.png' id='profile_pic'>
+                <img src='/uploads/<%=data[0].image%>' id='profile_pic'>
             </div>
         </div>
         <div id="uploadArea">
@@ -328,7 +330,7 @@
     var profile_picture=document.getElementById('profile_pic');
 
   //  profile_picture.addEventListener('click',function(event){
-      profile_picture.src="/uploads/"+'<%= data[0].email%>';
+      profile_picture.src="/uploads/<%=data[0].image%>";
 
     //});
 
@@ -402,6 +404,7 @@
     update_button.addEventListener('click',function(){
         console.log('I am clicked');
         var updetail = new Object();
+        updetail.image='<%=data[0].image%>';
         updetail.email = '<%= data[0].email%>';
         updetail._id = '<%= data[0]._id%>';
         updetail.name = document.getElementById('name_input').value;
@@ -412,6 +415,8 @@
         updetail.interest = document.getElementById('interest_input').value;
         updetail.journey = document.getElementById('journey_input').value;
         updetail.expectation = document.getElementById('expectation_input').value;
+        updetail.status='<%= data[0].role%>';
+        updetail.flag='1';
         var request = new XMLHttpRequest();
         request.open('PUT','/updateUserDetails');
         request.setRequestHeader('Content-Type','application/json');
