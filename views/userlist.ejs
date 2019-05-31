@@ -108,6 +108,8 @@
         }
         #profile_button{
             cursor: pointer;
+            height: 75px;
+            width: auto;
         }
         #body_div{
 			position:absolute;
@@ -400,6 +402,7 @@
 		});
 	});
 
+
 	function initTable() {
 		$('#myTable').DataTable({
 			"processing": true,
@@ -410,7 +413,7 @@
 			},
 			"columns": [
 				{ "data" : "name" },
-				{ "data" : "email" },
+				{ "data" : "phoneno" },
 				{ "data" : "city" },
 				{ "data" : "status" },
 				{ "data" : "role",
