@@ -5,6 +5,30 @@ var session = require('express-session');
 var nodemailer = require("nodemailer");
 var multer=require('multer');
 //var popups = require('popups');
+var passport = require('passport');
+app.use(passport.initialize());
+app.use(passport.session());
+var GitHubStrategy = require('passport-github').Strategy;
+
+passport.serializeUser(function(user,done){
+    done(null,user);
+});
+
+passport.deserializeUser(function(user,done){
+    done(null,user);
+});
+
+passport.use(new GitHubStrategy({
+    clientID: 'Iv1.240606520851954b',
+    clientSecret: '71b7d9fa7fb7569c3b594b3d8c3e6a959cc60c89',
+    callbackURL: "http://localhost:8000/auth/github/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    //User.findOrCreate({ githubId: profile.id }, function (err, user) {
+      return cb(null, profile);
+    })
+);
+
 var smtpTransport = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
@@ -45,31 +69,40 @@ var userSchema = mongoose.Schema({
 	role: String,
   status:String,
   flag: String,
+  image: String
 });
 
 var userdetails = mongoose.model("userdetails", userSchema);
+app.get('/auth/github',
+  passport.authenticate('github'));
 
-app.post('/Login',function(req,res){
-    console.log(req.body);
-    userdetails.find({
-        email: req.body.userName,
-        password: req.body.passWord
-    }).exec(function(error,data){
-        console.log(data);
-        req.session.isLogin = 1;
-        req.session.userName = req.body.userName;
-        req.session.password = req.body.passWord;
-        req.session.data = data;
-        res.send(data);
-    });
-});
-
+app.get('/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login.html' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    console.log(req.session.passport.user);
+    res.redirect('/admin/profile');
+  });
+  app.post('/login',function(req,res){
+      console.log(req.body);
+      userdetails.find({
+          email: req.body.userName,
+          password: req.body.passWord
+      }).exec(function(error,data){
+          console.log(data);
+          req.session.isLogin = 1;
+          req.session.userName = req.body.userName;
+          req.session.password = req.body.passWord;
+          req.session.data = data;
+          res.send(data);
+      });
+  });
 const storage = multer.diskStorage({
     destination: './Public/uploads',
     filename: function (req, file, cb) {
-      console.log(req.session.data[0]._id);
         // null as first argument means no error
-        cb(null, req.session.data[0].email )
+        cb(null, req.session.data[0]._id + path.extname(file.originalname))
+        req.session.data[0].image = req.session.data[0]._id + path.extname(file.originalname);
     }
 })
 const upload = multer({
@@ -81,21 +114,20 @@ const upload = multer({
         sanitizeFile(file, cb);
     }
 }).single('files')
+
 app.post('/upload', (req, res) => {
+
     upload(req, res, (err) => {
         if (err){
-            res.render('editprofile',{data: req.session.data})
-            console.log("File Not Uploaded Due To Error")
+            res.render('editprofile', { msg: err})
         }else{
             // If file is not selected
             if (req.file == undefined) {
-                res.render('editprofile', {data: req.session.data})
-                console.log("File Not Uploaded")
+                res.render('editprofile', { msg: 'No file selected!' })
+
             }
             else{
-                res.render('editprofile', {data: req.session.data})
-                //console.log(email)
-                console.log("File Uploaded Successfully")
+                res.render('editprofile',{data: req.session.data})
             }
         }
 
@@ -116,26 +148,43 @@ function sanitizeFile(file, cb) {
         cb('Error: File type not allowed!')
     }
 }
+
 app.get("/admin/userlist",function(req,res){
-    userdetails.find({}).exec(function(error,data){
-    res.render('userlist',{data: req.session.data});
-    });
+    if(req.session.isLogin){
+        userdetails.find({}).exec(function(error, data) {
+            res.render('userlist', {data: data});
+        });
+    } else{
+        res.redirect('/')
+    }
 });
 
 app.get("/admin/profile", function(req, res) {
-    res.render('homepage', {data: req.session.data});
+    if(req.session.isLogin)
+        res.render('homepage', {data: req.session.data});
+    else
+        res.redirect('/')
 })
 
 app.get('/changePassword',function(req,res){
-    res.render('changepassword',{data: req.session.data});
+    if(req.session.isLogin)
+        res.render('changepassword',{data: req.session.data});
+    else
+        res.redirect('/')
 });
 
 app.get('/admin/adduser',function(req,res){
-    res.render('adduser',{data: req.session.data});
+    if(req.session.isLogin)
+        res.render('adduser',{data: req.session.data});
+    else
+        res.redirect('/')
 });
 
 app.get('/tag',function(req,res){
-    res.render('tag',{data: req.session.data});
+    if(req.session.isLogin)
+        res.render('tag',{data: req.session.data});
+    else
+        res.redirect('/')
 });
 
 app.get('/communtiy/communityList',function(req,res){
@@ -147,7 +196,6 @@ app.get('/logout',function(req,res){
 });
 
 app.get('/',function(req,res){
-    console.log(req.body);
     if(req.session.isLogin){
         console.log("Already Logged in");
         res.render('homepage',{data: req.session.data});
@@ -156,15 +204,24 @@ app.get('/',function(req,res){
         res.sendFile(path.join(__dirname,'Public','Login.html'));
     }
 });
+app.get('/logout',function(req,res){
+    req.session.isLogin = 0;
+    res.redirect('/');
+});
 //console.log(email);
 app.get('/profile',function(req,res){
-    res.render('profile',{data: req.session.data});
+    if(req.session.isLogin)
+        res.render('profile',{data: req.session.data});
+    else
+        res.redirect('/');
 })
 
 app.get('/editProfile',function(req,res){
-    res.render('editprofile',{data: req.session.data});
+    if(req.session.isLogin)
+        res.render('editprofile',{data: req.session.data});
+    else
+        res.redirect('/');
 })
-
 
 
 //Function to update the password
@@ -244,10 +301,10 @@ app.post('/admin/adduser',function (req, res) {
 	    city: req.body.city,
 	    phoneno: req.body.phoneno,
 	    gender: "male",
-      dob: "11/08/1999",
-      role: req.body.role,
-      status: req.body.status,
-      flag: req.body.flag
+	    dob: "11/08/1999",
+        role: req.body.role,
+        status: req.body.status,
+        flag: req.body.flag
     })
     newUser.save()
      .then(data => {

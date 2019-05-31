@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/adhishanand9/CQ-Project#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "ejs": "^2.6.1",
     "jquery-confirm": "^3.3.4",
-    "multer": "^1.4.1"
+    "multer": "^1.4.1",
+    "passport": "^0.4.0",
+    "passport-github": "^1.1.0"
   }
 }
