@@ -81,7 +81,10 @@ app.get('/auth/github/callback',
   function(req, res) {
     // Successful authentication, redirect home.
     console.log(req.session.passport.user);
-    res.redirect('/admin/profile');
+    console.log(req.session.passport.user.emails[0].value);
+    req.session.isLogin=0;
+    var gitHubuser = new Object;
+    res.redirect('/profile');
   });
   app.post('/login',function(req,res){
       console.log(req.body);
