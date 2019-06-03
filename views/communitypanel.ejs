@@ -238,7 +238,7 @@
       <div id="community-body-div">
         <div id="community-body-heading-div">
           <p style="color:white;margin-top:6px;font-weight:bold">My Communities</p>
-          <a href='/community/AddCommunity' class="btn btn-info community-panel-btn" style="float:right;margin:-35px 5px 0 0">Create</a>
+          <a href='/community/AddCommunity' class="btn btn-info community-panel-btn" style="float:right;margin:-35px 5px 0 0" id="createCommunity">Create</a>
         </div>
         <div id="community-body-panel-div">
         </div>
@@ -255,9 +255,13 @@
     for(var i=0;i<div.length;i++){
         div[i].classList.remove("active");
     }
-
+    var create=document.getElementById("createCommunity");
     div[2].classList.add("active");
-
+    if("<%=data[0].role%>" == 'user')
+    {
+      console.log(1);
+      $("#create").remove();
+    }
     $(document).ready(function(){
       $("#sideBtn").click(function(){
          if($("#menu").width() == 50){

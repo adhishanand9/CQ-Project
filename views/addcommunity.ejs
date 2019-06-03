@@ -180,7 +180,6 @@
       }
       .outer-body-div{
         width:100%;
-        background: orange;
         position:absolute;
         left:50px;
 
@@ -188,11 +187,9 @@
       }
       #community-body-div{
         position:absolute;
-        margin-top:70px;
         left: 20%;
         height: 400px;
-        width: 60%;
-        background: #fff;
+        width: 50%;
         color: #333;
       }
       #community-body-heading-div{
@@ -218,6 +215,18 @@
       }
       #editor_body{
         height:350px;
+        padding:0px;
+      }
+      h2{
+          font-size: 2em;
+          font-weight: 500;
+          color:#707070;
+      }
+      #input_div{
+        width:200%;
+      }
+      #create_community_input{
+        width:50%;
       }
   </style>
 </head>
@@ -234,8 +243,35 @@
           </a>
         </div>
       </div>
+
+
+
       <div id="community-body-div">
+        <h2 align:center>Create Community</h2>
+        <div id="input_div">
+            <input type="text" placeholder="Community Name" id="create_community_input">
+        </div>
+        <p>Description</p>
         <div id="editor_body">
+        </div>
+        <div>
+        </div>
+        <div id="uploadImage">
+            <form method="POST" action="/upload" enctype="multipart/form-data">
+                <div class="text-center">
+                    <%= typeof msg != 'undefined' ? msg : '' %>
+                </div>
+                <div class="form-group upload-area">
+                    <label for="exampleFormControlFile1">Click Here To upload Files</label>
+                    <input type="file" name="files" class="form-control-file" id="exampleFormControlFile1">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="buttons" id="upload_button">Upload</button>
+                </div>
+            </form>
+        </div>
+        <div>
+          <input type="submit" id="create_comm_button" value="Create Community"></input>
         </div>
       <div>
     </div>
@@ -260,9 +296,18 @@ var menu = document.getElementById("menu");
     div[2].classList.add("active");
 
     var profile_button = document.getElementById("profile_button");
-
+    var create_button=document.getElementById("create_comm_button");
     var quill = new Quill('#editor_body', {
     theme: 'snow'
+  });
+  var editor_body_div=document.getElementById("editor_body");
+  var editor_body_div2=document.getElementsByClassName("ql-editor");
+
+  create_button.addEventListener('click',function(event){
+
+    var delta = quill.getContents();
+    console.log(editor_body_div2.innerHTML);
+    console.log(delta);
   });
     //Buttons on Left Navigation Drawer
     var profile_button_left = document.getElementById('profile_button_left');
