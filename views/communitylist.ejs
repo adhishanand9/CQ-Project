@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>CQ</title>
-    <link rel="stylesheet" href="/trumbowyg.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -14,13 +13,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready( function () {
-        $('#example').DataTable();
-        } );
-    </script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="/trumbowyg.min.js"></script>
+  <script>
+      $(document).ready( function () {
+      $('#myTable').DataTable();
+      } );
+  </script>
     <style>
       *{
         box-sizing: border-box;
@@ -303,7 +303,7 @@
                       </tr>
                   </thead>
                   <tbody>
-
+                  
                   </tbody>
           </table>
       </div>
@@ -313,121 +313,27 @@
   <script>
   var asc = <%- JSON.stringify(data)%>;
 
-      var menu = document.getElementById("menu");
-      var sideBtn = document.getElementById("sideBtn");
-      var body_internal_div = document.getElementById("body_internal_div");
-      var span = menu.getElementsByTagName("span");
-      var div = menu.getElementsByTagName('div');
-      for(var i=0;i<div.length;i++){
-          div[i].classList.remove("active");
-      }
+  var span = menu.getElementsByTagName("span");
+  var div = menu.getElementsByTagName('div');
+  for(var i=0;i<div.length;i++){
+      div[i].classList.remove("active");
+    }
 
-      div[6].classList.add("active");
+    div[4].classList.add("active");
 
-      var profile_button = document.getElementById("profile_button");
-
-      //Buttons on Left Navigation Drawer
-      var profile_button_left = document.getElementById('profile_button_left');
-      var add_user_button_left = document.getElementById('add_user_button_left');
-      var user_list_button = document.getElementById('user_list_button');
-      var community_list_button = document.getElementById('community_list_button');
-      var switch_user_button = document.getElementById('switch_user_button');
-      var tag_panel_button = document.getElementById('tag_panel_button');
-      var change_password_button = document.getElementById('change_password_button');
-      var logout_button = document.getElementById('logout_button');
+$(document).ready(function(){
+  $("#sideBtn").click(function(){
+     if($("#menu").width() == 50){
+        $("#menu").animate({width: '250px'},300);
+        $("#body_div").animate({left:'250px'},300);
+     } else{
+        $("#menu").animate({width: '50px'},300);
+        $("#body_div").animate({left:'50px'},300);
+     }
+  });
+});
 
 
-      $(document).ready(function(){
-        $("#sideBtn").click(function(){
-           if($("#menu").width() == 50){
-              $("#menu").animate({width: '250px'},300);
-              $("#body_div").animate({left:'250px'},300);
-           } else{
-              $("#menu").animate({width: '50px'},300);
-              $("#body_div").animate({left:'50px'},300);
-           }
-        });
-     });
-
-      profile_button.addEventListener("click",function(event){
-          window.location = '/profile'
-      })
-
-      change_password_button.addEventListener('click',function(event){
-          window.location = '/changePassword';
-      });
-
-      add_user_button_left.addEventListener('click',function(event){
-          window.location = '/<%= data[0].role%>/adduser';
-      });
-
-      profile_button_left.addEventListener("click",function(event){
-          window.location = '/<%= data[0].role%>/profile';
-      });
-      community_list_button.addEventListener("click",function(event){
-          window.location = '/communtiy/communitylist';
-      });
-
-      tag_panel_button.addEventListener("click",function(event){
-          window.location = '/tag';
-      });
-
-      user_list_button.addEventListener("click",function(event){
-          window.location = '/<%=data[0].role%>/userlist';
-      });
-      logout_button.addEventListener("click",function(event){
-          $.confirm({
-              title: 'Confirm Logout',
-              boxWidth: '20%',
-              theme: 'supervan',
-              // backgroundDismissAnimation: 'random',
-              useBootstrap: false,
-              content: 'Do you really want logout?',
-              buttons: {
-                  Yes: function () {
-                      window.location = '/logout';
-                  },
-                  No: function () {
-                  // $.alert('No');
-                  }
-              }
-          });
-      });
-
-      $(document).ready(function() {
-  		$.ajax({
-  			url: initTable(),
-  			success: function () {
-  				//appendBtns();
-  			}
-  		});
-  	});
-    function initTable() {
-  		$('#myTable').DataTable({
-  			"processing": true,
-  			"serverSide": true,
-  			"ajax": {
-  				"url": "/community/communityList",
-  				"type": "POST",
-  			},
-  			"columns": [
-  				{ "data" : "name" },
-  				{ "data" : "phoneno" },
-  				{ "data" : "city" },
-  				{ "data" : "status" },
-  				{ "data" : "role",
-  				  "class": "role" },
-  				{ "data" : null },
-  			],
-  			"columnDefs": [{
-                  "targets": -1,
-                  "render": function (data, type, row, meta) {
-                     data = '<center class="actions"></center>';
-                 		return data;
-                  }
-              }],
-  		});
-  	}
   </script>
 
 </html>

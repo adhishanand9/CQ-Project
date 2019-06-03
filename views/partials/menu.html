@@ -6,10 +6,10 @@
 </nav>
 <div id="menu">
     <div class="menu-item" id="sideBtn"><i class="fa fa-bars"></i><span>cq</span></div>
-    <div class="menu-item active" id="profile_button_left"><i class="fa fa-home"></i><span>Home</span></div>
+    <div class="menu-item active" id="profile_button_left"><i class="fa fa-user"></i><span>Home</span></div>
     <div class="menu-item" id="add_user_button_left"><i class="fa fa-plus-square"></i><span>Add User</span></div>
     <div class="menu-item" id="user_list_button"><i class="fa fa-list-ul"></i><span>Users List</span></div>
-    <div class="menu-item" id="community_list_button"><i class="fa fa-list-alt"></i><span>Community List</span></div>
+    <div class="menu-item" id="community_list_button"><i class="fa fa-group"></i><span>Community List</span></div>
     <div class="menu-item" id="switch_user_button"><i class="fa fa-toggle-off"></i><span>Switch As User</span></div>
     <div class="menu-item" id="tag_panel_button"><i class="fa fa-tags"></i><span>Tag Panel</span></div>
     <div class="menu-item" id="change_password_button"><i class="fa fa-lock"></i><span>Change Password</span></div>
@@ -17,33 +17,120 @@
 </div>
 <script>
 
-  if("<%=data[0].role%>" == 'user'){
-          if("<%=data[0].dob%>" == ""){
-              $("#menu").css("display", "none");
-              $("#role_on_top").css("display","none");
-          }else{
-              $("#menu").css("display","block");
-              $("#role_on_top").remove();
-              $("#add_user_button_left").remove();
-              $("#user_list_button").remove();
-              $("#switch_user_button").remove();
-              $("#tag_panel_button").remove();
-          }
-          change_password_button.addEventListener('click',function(event){
-              window.location = '/changePassword';
-          });
+    var profile_button = document.getElementById("profile_button");
 
-          profile_button.addEventListener("click",function(event){
-              window.location = '/profile'
-          })
+    //Buttons on Left Navigation Drawer
+    var profile_button_left = document.getElementById('profile_button_left');
+    var add_user_button_left = document.getElementById('add_user_button_left');
+    var user_list_button = document.getElementById('user_list_button');
+    var community_list_button = document.getElementById('community_list_button');
+    var switch_user_button = document.getElementById('switch_user_button');
+    var tag_panel_button = document.getElementById('tag_panel_button');
+    var change_password_button = document.getElementById('change_password_button');
+    var logout_button = document.getElementById('logout_button');
 
-          profile_button_left.addEventListener("click",function(event){
-              window.location = '/profile'
-          });
+    if("<%=data[0].role%>" == 'admin'){
+        profile_button.addEventListener("click",function(event){
+            window.location = '/profile'
+        })
 
-          community_list_button.addEventListener('click',function(){
-              // window.location = '/community/communityList';
-              alert('Hello I am community button');
-          });
-      }
-  </script>
+        profile_button_left.addEventListener("click",function(event){
+            window.location = '/<%= data[0].role%>/profile'
+        });
+
+        change_password_button.addEventListener('click',function(event){
+            window.location = '/changePassword';
+        });
+
+        add_user_button_left.addEventListener('click',function(event){
+            window.location = '/<%= data[0].role%>/adduser';
+        });
+
+        tag_panel_button.addEventListener("click",function(event){
+            window.location = '/tag';
+        });
+
+        user_list_button.addEventListener("click",function(event){
+            window.location = '/<%=data[0].role%>/userlist';
+        });
+
+        community_list_button.addEventListener('click',function(){
+            window.location = '/community/communityList';
+        });
+    }
+
+    switch_user_button.addEventListener("click",function(){
+        $.confirm({
+            title: 'Switch As User',
+            boxWidth: '25%',
+            theme: 'material',
+            // backgroundDismissAnimation: 'random',
+            useBootstrap: false,
+            content: 'Do you really want switch state...',
+            buttons: {
+                Yes: {
+                    btnClass: 'btn-green',
+                    action: function(){
+
+                    }
+                },
+                No: {
+                    btnClass: 'btn-red',
+                    action: function(){
+
+                    }
+                }
+            }
+        });
+    })
+
+    logout_button.addEventListener("click",function(event){
+        $.confirm({
+            title: 'Confirm Logout',
+            boxWidth: '20%',
+            theme: 'supervan',
+            backgroundDismissAnimation: 'random',
+            useBootstrap: false,
+            content: 'Do you really want logout?',
+            buttons: {
+                Yes: function () {
+                    window.location = '/logout';
+                },
+                No: function () {
+                // $.alert('No');
+                }
+            }
+        });
+    });
+
+    if("<%=data[0].role%>" == 'user'){
+        if("<%=data[0].dob%>" == ""){
+            $("#menu").css("display", "none");
+            $("#role_on_top").css("display","none");
+        }else{
+            $("#menu").css("display","block");
+            $("#role_on_top").remove();
+            $("#add_user_button_left").remove();
+            $("#user_list_button").remove();
+            $("#switch_user_button").remove();
+            $("#tag_panel_button").remove();
+        }
+        change_password_button.addEventListener('click',function(event){
+            window.location = '/changePassword';
+        });
+
+        profile_button.addEventListener("click",function(event){
+            window.location = '/profile'
+        })
+
+        profile_button_left.addEventListener("click",function(event){
+            window.location = '/profile'
+        });
+
+        community_list_button.addEventListener('click',function(){
+            //window.location = '/community/communitylist';
+            window.location='/communtiy/communitypanel'
+            //alert('Community Button');
+        });
+    }
+</script>

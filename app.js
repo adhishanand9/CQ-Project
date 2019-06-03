@@ -80,7 +80,16 @@ var tagSchema = mongoose.Schema({
 	creationdate: String,
 	flag: String
 });
+var communitySchema =mongoose.Schema({
+  comname:String,
+  membershiprule:String,
+  location:String,
+  owner:String,
+  creationdate:String,
+  image:String
+});
 var tagdetails = mongoose.model('tagdetails',tagSchema );
+var communitydetails = mongoose.model('communitydetails',communitySchema );
 app.get('/auth/github',
   passport.authenticate('github'));
 
@@ -118,7 +127,7 @@ app.get('/auth/github',
                   req.session.data = [result];
                   console.log("User added via Github");
                   var mailData = {
-                      from: "rajat.sharma1043@gmail.com",
+                      from: "adhishanand9@gmail.com",
                       to: req.session.data[0].email,
                       subject: "Code Quotient Confirmation Mail",
                       text: "Hello " + req.session.data[0].name + " this is confirmation mail. Your Password is " + req.session.data[0].password + "."
@@ -241,12 +250,21 @@ app.get('/tag',function(req,res){
         res.redirect('/')
 });
 
-app.get('/communtiy/communityList',function(req,res){
-  if(req.session.isLogin){
-    res.render('communitylist',{data: req.session.data});
-}else{
-    res.redirect('/')
-}
+//app.get('/communtiy/communityList',function(req,res){
+//  if(req.session.isLogin){
+//    res.render('communitylist',{data: req.session.data});
+//}else{
+//    res.redirect('/')
+//}
+//});
+app.get("/communtiy/communityList",function(req,res){
+    if(req.session.isLogin){
+        communitydetails.find({}).exec(function(error, data) {
+            res.render('communitylist',{data: req.session.data});
+        });
+    } else{
+        res.redirect('/')
+    }
 });
 app.get('/logout',function(req,res){
     req.session.isLogin = 0;
@@ -319,8 +337,8 @@ app.put('/updateUserDetails',function(req,res){
             gender: req.body.gender,
             phoneno: req.body.phoneno,
             city: req.body.city,
-            image:req.body.image,
-            status:req.body.status,
+            image: req.session.data[0].image,
+            status:"confirmed",
             flag:req.body.flag
         },
         {
@@ -328,6 +346,7 @@ app.put('/updateUserDetails',function(req,res){
             runValidators: true
         })
         .then(data=>{
+            req.session.data=[data];
             console.log(data);
             res.send(data);
         })
@@ -376,6 +395,23 @@ app.post("/updateState", function (request, response) {
 	userdetails.updateOne({_id: request.body.id}, {flag: request.body.state}).exec(data => console.log("state updated"));
 	response.send("state updated");
 });
+app.post('/tag',function(req,res){
+    console.log(req.body);
+    let newTag = new tagdetails({
+        tagname: req.body.name,
+        creationdate: req.body.creationdate,
+        creator: req.session.data[0].name,
+        flag: req.body.flag
+    })
+    newTag.save().then(data=>{
+        console.log(data);
+        res.send(data);
+    })
+    .catch(err => {
+        console.error(err)
+        res.send(error)
+    })
+})
 
 app.post("/getUserData", function (req, res) {
 	var flag;
@@ -517,7 +553,33 @@ app.post('/admin/adduser',function (req, res) {
  });
 
 });
-
+app.get('/tag/tagslist',function(req,res){
+    if(req.session.isLogin){
+        tagdetails.find({}).exec(function(error, data) {
+			res.render('tagslist', {tagdata: data,data: req.session.data});
+		});
+    } else {
+        res.redirect('/');
+    }
+})
+app.get('/communtiy/communitypanel',function(req,res){
+  if(req.session.isLogin){
+      communitydetails.find({}).exec(function(error, data) {
+    res.render('communitypanel', {communtiydata: data,data: req.session.data});
+  });
+  } else {
+      res.redirect('/');
+  }
+})
+app.get('/community/AddCommunity',function(req,res){
+  if(req.session.isLogin){
+      communitydetails.find({}).exec(function(error, data) {
+    res.render('addcommunity', {communtiydata: data,data: req.session.data});
+  });
+  } else {
+      res.redirect('/');
+  }
+})
 app.post('/tag',function(req,res){
     console.log(req.body);
     let newTag = new tagdetails({

@@ -241,21 +241,21 @@
         <div id="profile_photo_div">
             <div id="profile_div">
                 <img src='/uploads/<%=data[0].image%>' id='profile_pic'>
+                    <div id="uploadImage">
+                        <form method="POST" action="/upload" enctype="multipart/form-data">
+                            <div class="text-center">
+                                <%= typeof msg != 'undefined' ? msg : '' %>
+                            </div>
+                            <div class="form-group upload-area">
+                                <label for="exampleFormControlFile1">Click Here To upload Files</label>
+                                <input type="file" name="files" class="form-control-file" id="exampleFormControlFile1">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="buttons" id="upload_button">Upload</button>
+                            </div>
+                        </form>
+                    </div>
             </div>
-        </div>
-        <div id="uploadArea">
-          <form method="POST" action="/upload" enctype="multipart/form-data" id="uploadImage">
-              <div class="text-center">
-                  <%= typeof msg != 'undefined' ? msg : '' %>
-              </div>
-              <div class="form-group upload-area" id="uploadArea">
-                  <label for="exampleFormControlFile1">Click Here To upload Files</label>
-                  <input type="file" name="files" class="form-control-file" id="exampleFormControlFile1">
-              </div>
-              <div class="form-group">
-                  <button type="submit" class="btn btn-primary">Upload</button>
-              </div>
-          </form>
         </div>
         <div id='basic_info_div'>
         <div id="basic_info_heading">Basic Info</div>
@@ -268,8 +268,8 @@
             <input type="text" id="dob_input" value="<%=data[0].dob%>">
             <label id="gender_label">Gender: </label>
             <select id="select_gender" name="role">
-                <option selected="true" disabled="disabled">Select Gender</option>
-                <option value="male" selected>Male</option>
+                <option disabled="disabled">Select Gender</option>
+                <option value="male" selected="selected">Male</option>
                 <option value="female">Female</option>
                 <option value="transgender">Transgender</option>
             </select>
@@ -287,7 +287,7 @@
         </div>
         <div id='buttons_div'>
             <form>
-            <button id="change_password_buttonn" type="buttons" class="buttons">Change Password</button>
+            <button id="change_password_buttonn" type="button" class="buttons">Change Password</button>
             <button id="update_button" type="button" class="buttons">Update</button>
             <button id="cancel_button" type="button" class="buttons">Cancel</button>
             </form>
@@ -307,27 +307,9 @@
 
     div[1].classList.add("active");
 
-    var profile_button = document.getElementById("profile_button");
-
-    //Buttons on Left Navigation Drawer
-    var profile_button_left = document.getElementById('profile_button_left');
-    var add_user_button_left = document.getElementById('add_user_button_left');
-    var user_list_button = document.getElementById('user_list_button');
-    var community_list_button = document.getElementById('community_list_button');
-    var switch_user_button = document.getElementById('switch_user_button');
-    var tag_panel_button = document.getElementById('tag_panel_button');
-    var change_password_button = document.getElementById('change_password_button');
-    var logout_button = document.getElementById('logout_button');
-
     var change_password_buttonn = document.getElementById('change_password_buttonn');
     var cancel_button = document.getElementById('cancel_button');
     var update_button = document.getElementById('update_button');
-    var profile_picture=document.getElementById('profile_pic');
-
-  //  profile_picture.addEventListener('click',function(event){
-      profile_picture.src="/uploads/<%=data[0].image%>";
-
-    //});
 
     $(document).ready(function(){
       $("#sideBtn").click(function(){
@@ -341,56 +323,8 @@
       });
    });
 
-
-
-    profile_button.addEventListener("click",function(event){
-        window.location = '/profile'
-    })
-
-    change_password_button.addEventListener('click',function(event){
-        window.location = '/changePassword';
-    });
-
-    add_user_button_left.addEventListener('click',function(event){
-        window.location = '/<%= data[0].role%>/adduser';
-    });
-
-    profile_button_left.addEventListener("click",function(event){
-        window.location = '/<%= data[0].role%>/profile';
-    });
-
-    tag_panel_button.addEventListener("click",function(event){
-        window.location = '/tag';
-    });
-
-    user_list_button.addEventListener("click",function(event){
-        window.location = '/<%=data[0].role%>/userlist';
-    });
-
-    logout_button.addEventListener("click",function(event){
-        $.confirm({
-            title: 'Confirm Logout',
-            boxWidth: '20%',
-            theme: 'supervan',
-            // backgroundDismissAnimation: 'random',
-            useBootstrap: false,
-            content: 'Do you really want logout?',
-            buttons: {
-                Yes: function () {
-                    window.location = '/logout';
-                },
-                No: function () {
-                // $.alert('No');
-                }
-            }
-        });
-    });
-    community_list_button.addEventListener("click",function(event){
-        window.location = '/communtiy/communitylist';
-    });
-
     change_password_buttonn.addEventListener('click',function(){
-        window.location = '/changePassword'
+        window.location = '/changePassword';
     });
 
     cancel_button.addEventListener('click',function(){
@@ -436,6 +370,4 @@
     });
 
 </script>
-<script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-       crossorigin="anonymous"></script>
 </html>

@@ -23,7 +23,7 @@ loginBtn.addEventListener('click',function(event){
                 passWord.value="";
             } else {
                 if(dataReturned[0].flag=='0'){
-                    window.location = "/404notfound"
+                    window.location = "/editprofile"
                 }
                 else if(dataReturned[0].role === 'admin')
                 window.location = dataReturned[0].role + "/profile";
