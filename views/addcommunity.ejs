@@ -1,338 +1,309 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CQ</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Commuinity Panel</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="/trumbowyg.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="/trumbowyg.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <style>
-      *{
-          box-sizing: border-box;
-      }
-      body {
-    margin: 0;
-          padding: 0;
-          width: 100%;
-          background: #f5f5f5;
-          font-family: 'Roboto', sans-serif;
-  }
-  nav {
-          position:fixed;
-          width:100%;
-          height: 60px;
-    background-color: #222D3C;
-          color: #fff;
-          z-index: 999999999;
-  }
-  nav p {
-          margin: 0;
-          float: left;
-          height: 50px;
-          padding: 15px 15px;
-          font-size: 20px;
-          line-height: 20px;
-          font-weight: bold;
-  }
-  nav span {
-          float: right;
-          padding: .2em .6em .3em;
-          margin-top: 22px;
-          margin-left: 5px;
-          font-size: 75%;
-          line-height: 1;
-          font-weight: 700;
-          color: #fff;
-          font-size: 14px;
-          vertical-align: center;
-          border-radius: .25em;
-          vertical-align: baseline;
-  }
-  nav img {
-    float: right;
-    border-radius: 50%;
-    padding: 15px;
-      }
-  #menu {
-          position:fixed;
-          padding-top: 60px;
-          background-color: #000;
-          width: 50px;
-          height:100vh;
-          color:white;
-          box-sizing: border-box;
-          overflow:hidden;
-  }
-  .fa {
-          color: #fff;
-    font-size: 25px;
-    width: 30px;
-    margin: 6px 15px;
-    margin-left: 11px;
-    box-sizing: border-box;
-  }
-  .menu-item {
-          width: 250px;
-    cursor: pointer;
-    opacity: 0.8;
-    color: #fff;
-    font-family: sans-serif;
-    font-size: 14px;
-          padding-top: 10px;
-  }
-  .menu-item:hover {
-    border-left: 2px solid red;
-    opacity: 1;
-    background-color: #4d5866;
-  }
-      .active{
-          background: #51a1e2 !important;
-      }
-      #user_icon{
-          height:100%;
-          width: 10%;
-      }
-
-      *{
-          box-sizing: border-box;
-      }
-      div label{
-          transform: translateY(-50%,-50%);
-          font-weight: 600;
-          display: inline-block;
-          width: 100%;
-          margin-top: 15px;
-          cursor: default;
-          box-sizing: border-box;
-      }
-      div input{
-          width:100%;
-          margin-top: 7px;
-          font-size: 1em;
-          height:30px;
-          padding:1px;
-          border-radius: 4px;
-          border: 1px solid #ccc;
-      }
-      div button{
-          margin-top: 30px;
-          padding: 9px 13px;
-          background: #4cae4c;
-          border:0;
-          border-color: #449d44;
-          color: #fff;
-      }
-      div button:hover{
-          background: #449d44;
-      }
-      #profile_button{
-          cursor: pointer;
-          padding: 0;
-          padding-left: 5px;
-          padding-top: 5px;
-          height: 60px;
-
-      }
-      .community-header-top{
-          width:100%;
-          background-image: linear-gradient(to bottom, #4ba2b7, #42a6be, #38aac6, #29adcd, #0fb1d5);
-          height: 106px;
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body {
+			margin: 0;
+            padding: 0;
+            width: 100%;
+            background: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+		}
+		nav {
+            position:fixed;
+            width:100%;
+            height: 60px;
+			background-color: #222D3C;
+            color: #fff;
+            z-index: 9999999;
+		}
+		nav p {
+            margin: 0;
+            float: left;
+            height: 50px;
+            padding: 15px 15px;
+            font-size: 20px;
+            line-height: 20px;
+            font-weight: bold;
+		}
+		nav span {
+            float: right;
+            padding: .2em .6em .3em;
+            margin-top: 22px;
+            margin-left: 5px;
+            font-size: 75%;
+            line-height: 1;
+            font-weight: 700;
+            color: #fff;
+            font-size: 14px;
+            vertical-align: center;
+            border-radius: .25em;
+            vertical-align: baseline;
+		}
+		nav img {
+			float: right;
+			border-radius: 50%;
+			padding: 15px;
+        }
+		#menu {
+            position:fixed;
+            padding-top: 60px;
+            background-color: #000;
+            width: 50px;
+            height:100vh;
+            color:white;
+            box-sizing: border-box;
+            overflow:hidden;
+            z-index: 99;
+		}
+		.fa {
+            color: #fff;
+			font-size: 25px;
+			width: 30px;
+			margin: 6px 15px;
+			margin-left: 11px;
+			box-sizing: border-box;
+		}
+		.menu-item {
+            width: 250px;
+			cursor: pointer;
+			opacity: 0.8;
+			color: #fff;
+			font-family: sans-serif;
+			font-size: 14px;
+            padding-top: 10px;
+		}
+		.menu-item:hover {
+			border-left: 2px solid red;
+			opacity: 1;
+			background-color: #4d5866;
+		}
+        .active{
+            background: #51a1e2 !important;
+        }
+        #user_icon{
+            height:100%;
+            width: 10%;
+        }
+        #community_header_div{
+            position: absolute;
+            top:60px;
+            width: 100%;
+            padding-left: 100px;
+            background-color: #3ea7c1;
+            line-height: 50px;
         }
 
+        #body_internal_div{
+            padding:0;
+            margin:0;
+            position: absolute;
+            left: 25%;
+            top: 20%;
+            width: 50%;
+            border: 1px solid #eeeeee;
+            box-shadow: 0px 1px 10px 0px rgb(201, 201, 201);
+            margin-bottom: 50px;
+        }
+        .btn{
+            background: transparent;
+            border: 1px solid #fff;
+            width: 50px;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 10px;
+            margin-top: 2px;
+        }
+        #community_header_div button i {
+            padding: 0;
+            margin: 5px;
+            display: block;
+        }
+        .content {
+            width: 100%;
+            margin: 0 auto;
+            margin-top: 1%;
+            margin-bottom: 2%;
+        }
+        h2 {
+            margin: 0;
+        }
+        #textInput {
+            width: 100%;
+            border-radius: 3px;
+            padding: 8px;
+            margin-bottom: 2%;
+        }
+        textarea {
+            margin-top: 2%;
+            width: 100%;
+            border-radius: 2px;
+            resize: none;
+        }
+        .radio {
+            display: inline;
+        }
+        #upload {
+            margin-top: 2%;
+            margin-left: 2%;
+            background-color: #fab448;
+            height: 30px;
+            border: none;
+            color: #fff;
+        }
+        #create {
+            margin-top: 4%;
+            background-color: #3598d9;
+            height: 30px;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            border: none;
+        }
+        #profile_button{
+            cursor: pointer;
+            padding: 0;
+            padding-left: 5px;
+            padding-top: 5px;
+            height: 60px;
 
-      .communtiy-sub-head-div{
-        margin-top:65px;
-        margin-left:20px;
-        position:fixed;
-        height:100px;
-        width:100%;
-
-      }
-      .btn-default{
-        background-color:rgba(255,255,255,0.1);
-        color:#fff;
-        border:1px solid #fff;
-        margin-left:15px;
-        padding-top:10px;
-        padding-bottom:5px;
-        padding-left:0px;
-        padding-right:15px;
-      }
-      .btn-default:hover{
-        background-color:rgba(255,255,255,0.5);
-        color:#fff;
-        border:1px solid #fff;
-      }
-      .fa-users{
-          height:1px;
-          width:1px;
-      }
-      .fa-search{
-          height:1px;
-          width:1px;
-      }
-      .outer-body-div{
-        width:100%;
-        position:absolute;
-        left:50px;
-
-
-      }
-      #community-body-div{
-        position:absolute;
-        left: 20%;
-        height: 400px;
-        width: 50%;
-        color: #333;
-      }
-      #community-body-heading-div{
-        border-radius:0;
-        background-image: linear-gradient(to top, #4ba2b7, #42a6be, #38aac6, #29adcd, #0fb1d5);
-        height:50px;
-        margin:0px;
-        padding:0px;
-        width:100%;
-      }
-      .community-panel-btn{
-        color:#fff;
-        background:transparent;
-        border-color:#fff;
-        transition: all .4s ease;
-        -webkit-transition: all .4s ease;
-      }
-      .community-panel-btn:hover{
-        color:#fff;
-        background:transparent;
-        border-color:#fff;
-        text-decoration: none;
-      }
-      #editor_body{
-        height:350px;
-        padding:0px;
-      }
-      h2{
-          font-size: 2em;
-          font-weight: 500;
-          color:#707070;
-      }
-      #input_div{
-        width:200%;
-      }
-      #create_community_input{
-        width:50%;
-      }
-  </style>
+        }
+        #uploadImage{
+            float: left;
+            margin-bottom: 20px;
+        }
+        #upload_button{
+          background-color: #fab448;
+          height: 30px;
+          border: none;
+          color: #fff;
+        }
+    </style>
 </head>
 <body>
     <% include partials/menu.html %>
-    <div class="outer-body-div" id="outer-body-div1">
-      <div class="community-header-top" id="community-body-inner-div">
-        <div class="communtiy-sub-head-div">
-          <a class="btn btn-default" href="/communtiy/communitypanel" aria-label="Panel">
-            <i class="fa fa-users" aria-hidden="true"></i>
-          </a>
-          <a class="btn btn-default" href="/communtiy/communitypanel" aria-label="List">
-            <i class="fa fa-search" aria-hidden="true"></i>
-          </a>
-        </div>
-      </div>
-
-
-
-      <div id="community-body-div">
-        <h2 align:center>Create Community</h2>
-        <div id="input_div">
-            <input type="text" placeholder="Community Name" id="create_community_input">
-        </div>
-        <p>Description</p>
-        <div id="editor_body">
-        </div>
-        <div>
-        </div>
-        <div id="uploadImage">
-            <form method="POST" action="/upload" enctype="multipart/form-data">
-                <div class="text-center">
-                    <%= typeof msg != 'undefined' ? msg : '' %>
-                </div>
-                <div class="form-group upload-area">
-                    <label for="exampleFormControlFile1">Click Here To upload Files</label>
-                    <input type="file" name="files" class="form-control-file" id="exampleFormControlFile1">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="buttons" id="upload_button">Upload</button>
-                </div>
-            </form>
-        </div>
-        <div>
-          <input type="submit" id="create_comm_button" value="Create Community"></input>
-        </div>
-      <div>
+    <div id="community_header_div">
+        <button class="btn" id="community_panel"><i class="fa fa-group"></i></button>
+        <button class="btn"><i class="fa fa-search"></i></button>
     </div>
-
+    <div id="body_internal_div">
+        <div class="content">
+            <h2>Create Community</h2>
+            <br>
+            <input type="text" id="community_name_input" placeholder="Name">
+            <br>
+            <label>Description</label>
+            <br>
+            <textarea id="description_text_area"></textarea>
+            <br>
+            <label class="radio">Rule: </lebel>
+            <input type="radio" class="radio" name="role" id="direct">
+            <label class="radio">Direct: </label>
+            <input type="radio" class="radio" name="role" id="permission">
+            <label class="radio">Permisson</label>
+            <br>
+            <div id="uploadbutton">
+                    <form method="POST" action="/uploadCommunity" enctype="multipart/form-data">
+                        <div class="text-center">
+                            <%= typeof msg != 'undefined' ? msg : '' %>
+                        </div>
+                        <div class="form-group upload-area">
+                            <label for="exampleFormControlFile1">Click Here To upload Files</label>
+                            <input type="file" name="files" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="buttons" id="upload_button">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            <br>
+            <button id="create_community_button">Create Community</button>
+        </div>
+    </div>
 </body>
-
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script>
-var menu = document.getElementById("menu");
+    var menu = document.getElementById("menu");
     var sideBtn = document.getElementById("sideBtn");
-    var body_internal_div = document.getElementById("change_password_outerdiv");
+    var body_internal_div = document.getElementById("outer-body-div1");
+    var community_header_div = document.getElementById("community_header_div");
     var span = menu.getElementsByTagName("span");
     var div = menu.getElementsByTagName('div');
-    var submit_button = document.getElementById("submit_button");
     for(var i=0;i<div.length;i++){
         div[i].classList.remove("active");
     }
-
-    if("<%=data[0].role%>" == 'admin')
-    div[7].classList.add("active");
-    else
+    var create=document.getElementById("createCommunity");
     div[2].classList.add("active");
 
-    var profile_button = document.getElementById("profile_button");
-    var create_button=document.getElementById("create_comm_button");
-    var quill = new Quill('#editor_body', {
-    theme: 'snow'
-  });
-  var editor_body_div=document.getElementById("editor_body");
-  var editor_body_div2=document.getElementsByClassName("ql-editor");
+    var community_panel=document.getElementById("community_panel");
+    community_panel.addEventListener('click',function(event){
+      window.location = '/communtiy/communitypanel'
+    });
+    create_community_button.addEventListener('click',function(){
+        var date = new Date();
+        var communityname = document.getElementById("community_name_input").value;
+        console.log(communityname);
+        var descriptiontextarea = document.getElementById("description_text_area").value;
+        var newcommunity = new Object();
+        newcommunity.communityname = communityname;
+        newcommunity.descriptiontextarea = descriptiontextarea;
+        newcommunity.createdate = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+        if(document.getElementById('direct').checked) {
+            newcommunity.membershiprule = "Direct";
+        }else if(document.getElementById('permission').checked) {
+            newcommunity.membershiprule = "Permission";
+        }
+        var request = new XMLHttpRequest();
+        request.open('POST','/community/AddCommunity');
+        request.setRequestHeader('Content-Type','application/json');
+        request.send(JSON.stringify(newcommunity));
+        request.onload = function(){
+            var dataReturned = request.responseText;
+            if(dataReturned==""||dataReturned==null){
+            alert('Error in Adding Details!!!');
+            window.location = '/community/AddCommunity';
+            }
+            else{
+                console.log(dataReturned);
+                alert('Community Added Correctly');
+                window.location = '/community/AddCommunity';
+            }
+        }
+    });
 
-  create_button.addEventListener('click',function(event){
 
-    var delta = quill.getContents();
-    console.log(editor_body_div2.innerHTML);
-    console.log(delta);
-  });
-    //Buttons on Left Navigation Drawer
-    var profile_button_left = document.getElementById('profile_button_left');
-    var add_user_button_left = document.getElementById('add_user_button_left');
-    var user_list_button = document.getElementById('user_list_button');
-    var community_list_button = document.getElementById('community_list_button');
-    var switch_user_button = document.getElementById('switch_user_button');
-    var tag_panel_button = document.getElementById('tag_panel_button');
-    var change_password_button = document.getElementById('change_password_button');
-    var logout_button = document.getElementById('logout_button');
-    var text_editor_div=document.getElementById('editor_body');
+
     $(document).ready(function(){
-        $("#sideBtn").click(function(){
-           if($("#menu").width() == 50){
-              $("#menu").animate({width: '250px'},300);
-              $("#change_password_outerdiv").animate({left:'35%'},300);
-           } else{
-              $("#menu").animate({width: '50px'},300);
-              $("#change_password_outerdiv").animate({left:'30%'},300);
-           }
-        });
-     });
-
-
-
-</script>
-
+      $("#sideBtn").click(function(){
+         if($("#menu").width() == 50){
+            $("#menu").animate({width: '250px'},300);
+            $("#body_internal_div").animate({left:'35%'},300);
+            $("#community_header_div").animate({'padding-left':'250px'},300);
+         } else{
+            $("#menu").animate({width: '50px'},300);
+            $("#body_internal_div").animate({left:'25%'},300);
+            $("#community_header_div").animate({'padding-left':'100px'},300);
+         }
+      });
+   });
+    $(document).ready(function() {
+        $.trumbowyg.svgPath = "/trumbowyg.svg"
+        $("#description_text_area").trumbowyg();
+    });
+    </script>
 </html>

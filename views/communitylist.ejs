@@ -126,15 +126,7 @@
           width: auto;
           border: 1px solid rgb(201, 201, 201);
       }
-      #tag {
-    width: 100px;
-    background-color: #2D312C;
-    color: #fff;
-    text-align: center;
-    padding: 6px;
-    border-radius: 4px;
-    box-shadow: 1px 1px 1px #2D312C, -1px -1px 1px #2D312C;
-  }
+
   #refresh {
     background-color: #2D312C;
     width: 100px;
@@ -178,6 +170,10 @@
     width: auto;
     margin: 0;
     box-sizing: initial;
+  }
+  #community_list_icon{
+    height:15x;
+    width:auto;
   }
   </style>
   </head>
@@ -303,7 +299,17 @@
                       </tr>
                   </thead>
                   <tbody>
-                  
+                    <%communitydata.forEach(function(d) { %>
+                      <tr>
+                      <td><%=d.comname%></td>
+                      <td><%=d.membershiprule%></td>
+                      <td><%=d.location%></td>
+                      <td><%=d.owner%></td>
+                      <td><%=d.createdate%></td>
+                      <td>"Actions"</td>
+                      <td><img src=/<%=d.image%> id="community_list_icon" height=35px></td>
+                    </tr>
+                    <%})%>
                   </tbody>
           </table>
       </div>
@@ -311,7 +317,6 @@
 
   </body>
   <script>
-  var asc = <%- JSON.stringify(data)%>;
 
   var span = menu.getElementsByTagName("span");
   var div = menu.getElementsByTagName('div');
@@ -333,7 +338,7 @@ $(document).ready(function(){
   });
 });
 
-
+console.log(communtiydata);
   </script>
 
 </html>

@@ -82,10 +82,11 @@ var tagSchema = mongoose.Schema({
 });
 var communitySchema =mongoose.Schema({
   comname:String,
+  communitydescription:String,
   membershiprule:String,
   location:String,
   owner:String,
-  creationdate:String,
+  createdate:String,
   image:String
 });
 var tagdetails = mongoose.model('tagdetails',tagSchema );
@@ -162,6 +163,23 @@ const upload = multer({
         sanitizeFile(file, cb);
     }
 }).single('files')
+const storage2 = multer.diskStorage({
+    destination: './Public/uploads',
+    filename: function (req, file, cb) {
+        // null as first argument means no error
+        cb(null, req.session.data[0].name + path.extname(file.originalname))
+        //req.session.data[0].image = req.session.data[0].name + path.extname(file.originalname);
+    }
+})
+const upload2 = multer({
+    storage: storage2,
+    limits: {
+        fileSize: 1000000
+    },
+    fileFilter: function (req, file, cb) {
+        sanitizeFile(file, cb);
+    }
+}).single('files')
 
 app.post('/upload', (req, res) => {
 
@@ -176,6 +194,24 @@ app.post('/upload', (req, res) => {
             }
             else{
                 res.render('editprofile',{data: req.session.data})
+            }
+        }
+
+    })
+})
+app.post('/uploadCommunity', (req, res) => {
+
+    upload2(req, res, (err) => {
+        if (err){
+            res.render('addcommunity', {data: req.session.data})
+        }else{
+            // If file is not selected
+            if (req.file == undefined) {
+                res.render('addcommunity', { data: req.session.data })
+
+            }
+            else{
+                res.render('addcommunity',{data: req.session.data})
             }
         }
 
@@ -257,15 +293,16 @@ app.get('/tag',function(req,res){
 //    res.redirect('/')
 //}
 //});
-app.get("/communtiy/communityList",function(req,res){
+app.get('/communtiy/communityList',function(req,res){
     if(req.session.isLogin){
         communitydetails.find({}).exec(function(error, data) {
-            res.render('communitylist',{data: req.session.data});
-        });
-    } else{
-        res.redirect('/')
+			 res.render('communitylist', {communitydata: data,data: req.session.data});
+      //  console.log(communitydata);
+		});
+    } else {
+        res.redirect('/');
     }
-});
+})
 app.get('/logout',function(req,res){
     req.session.isLogin = 0;
     res.redirect('/');
@@ -553,10 +590,32 @@ app.post('/admin/adduser',function (req, res) {
  });
 
 });
+app.post('/community/AddCommunity',function(req,res){
+    console.log(req.body);
+    let newCommunity = new communitydetails({
+        comname: req.body.communityname,
+        communitydescription: req.body.descriptiontextarea,
+        membershiprule: req.body.membershiprule,
+        location: req.session.data[0].city,
+        owner: req.session.data[0].name,
+        createdate: req.body.createdate,
+        image: 'default.png',
+    })
+    newCommunity.save()
+     .then(data => {
+       console.log(data)
+       res.send(data)
+     })
+     .catch(err => {
+       console.error(err)
+       res.send(error)
+     })
+})
 app.get('/tag/tagslist',function(req,res){
     if(req.session.isLogin){
         tagdetails.find({}).exec(function(error, data) {
 			res.render('tagslist', {tagdata: data,data: req.session.data});
+      //console.log(tagdata);
 		});
     } else {
         res.redirect('/');
