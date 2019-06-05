@@ -175,6 +175,13 @@
     height:15x;
     width:auto;
   }
+  .actions i {
+    background-color: #000;
+    font-size: 16px;
+    text-align: center;
+    padding: 6px;
+    cursor: pointer;
+  }
   </style>
   </head>
   <body>
@@ -306,7 +313,7 @@
                       <td><%=d.location%></td>
                       <td><%=d.owner%></td>
                       <td><%=d.createdate%></td>
-                      <td>"Actions"</td>
+                      <td class="actions"></td>
                       <td><img src=/<%=d.image%> id="community_list_icon" height=35px></td>
                     </tr>
                     <%})%>
@@ -337,6 +344,15 @@ $(document).ready(function(){
      }
   });
 });
+var actionBtns = document.getElementsByClassName("actions");
+for(var i = 0;i<actionBtns.length;i++) {
+ var editBtn = document.createElement("i");
+ editBtn.classList.add("fa", "fa-edit");
+ actionBtns[i].appendChild(editBtn);
+ var infoBtn = document.createElement("i");
+ infoBtn.classList.add("fa", "fa-info");
+ actionBtns[i].appendChild(infoBtn);
+}
 
 console.log(communtiydata);
   </script>

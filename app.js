@@ -86,8 +86,11 @@ var communitySchema =mongoose.Schema({
   membershiprule:String,
   location:String,
   owner:String,
+  ownerid:String,
   createdate:String,
-  image:String
+  image:String,
+  communitystatus:String,
+  communitymembers:Number
 });
 var tagdetails = mongoose.model('tagdetails',tagSchema );
 var communitydetails = mongoose.model('communitydetails',communitySchema );
@@ -388,7 +391,32 @@ app.put('/updateUserDetails',function(req,res){
             res.send(data);
         })
         .catch(err=>{
-            console.log('eror aya');
+            console.log('Error');
+            console.error(err);
+            res.send(error);
+        })
+});
+app.put('/updateCommunityDetails',function(req,res){
+    console.log(req.body);
+        communitydetails.findOneAndUpdate(
+        {
+            _id: req.body._id,
+        },
+        {
+            communitymembers:req.body.members
+
+        },
+        {
+            new: true,
+            runValidators: true
+        })
+        .then(data=>{
+            req.session.data=[data];
+            console.log(data);
+            res.send(data);
+        })
+        .catch(err=>{
+            console.log('Error');
             console.error(err);
             res.send(error);
         })
@@ -562,7 +590,7 @@ app.post('/admin/adduser',function (req, res) {
         role: req.body.role,
         status: req.body.status,
         flag: req.body.flag,
-        image:'/uploads/default.png'
+        image:'default.png'
     })
     newUser.save()
      .then(data => {
@@ -599,7 +627,10 @@ app.post('/community/AddCommunity',function(req,res){
         location: req.session.data[0].city,
         owner: req.session.data[0].name,
         createdate: req.body.createdate,
+        ownerid: req.session.data[0]._id,
         image: 'default.png',
+        communitystatus: 'active',
+        communitymembers: '0',
     })
     newCommunity.save()
      .then(data => {
@@ -630,6 +661,28 @@ app.get('/communtiy/communitypanel',function(req,res){
       res.redirect('/');
   }
 })
+app.get('/communtiy/communitypanellist',function(req,res){
+  if(req.session.isLogin){
+      communitydetails.find({}).exec(function(error, data) {
+    res.render('communitypanellist', {communtiydata: data,data: req.session.data});
+  });
+  } else {
+      res.redirect('/');
+  }
+})
+app.get('/community/communityprofile/:id',function(req,res){
+  if(req.session.isLogin){
+      communitydetails.find({
+          _id: req.params.id,
+      }).exec(function(error,data){
+          console.log(data);
+          res.render('communityprofile', {communitydata: data,data: req.session.data});
+      });
+  } else {
+      res.redirect('/');
+  }
+})
+
 app.get('/community/AddCommunity',function(req,res){
   if(req.session.isLogin){
       communitydetails.find({}).exec(function(error, data) {

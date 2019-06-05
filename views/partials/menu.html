@@ -142,4 +142,28 @@
           //alert('Hello I am community button');
       });
   }
+  if("<%=data[0].role%>" == 'communitybuilder'){
+      $("#role_on_top").remove();
+          $("#add_user_button_left").remove();
+          $("#user_list_button").remove();
+          $("#switch_user_button").remove();
+          $("#tag_panel_button").remove();
+      change_password_button.addEventListener('click',function(event){
+          window.location = '/changePassword';
+      });
+
+      profile_button.addEventListener("click",function(event){
+          window.location = '/profile'
+      })
+
+      profile_button_left.addEventListener("click",function(event){
+          window.location = '/profile'
+      });
+
+      community_list_button.addEventListener('click',function(){
+          // window.location = '/community/communityList';
+          alert('Hello I am community Panel button');
+      });
+
+  }
 </script>

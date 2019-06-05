@@ -30,7 +30,9 @@ loginBtn.addEventListener('click',function(event){
                 else if(dataReturned[0].status === 'pending')
                 window.location = "editprofile"
                 else if(dataReturned[0].role === 'user')
-                window.location = "/profile";
+                window.location = "/communtiy/communitypanel";
+                else if(dataReturned[0].role === 'communitybuilder')
+                window.location = "/community/communitypanel";
             }
         }
     }
