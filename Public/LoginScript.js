@@ -32,7 +32,7 @@ loginBtn.addEventListener('click',function(event){
                 else if(dataReturned[0].role === 'user')
                 window.location = "/communtiy/communitypanel";
                 else if(dataReturned[0].role === 'communitybuilder')
-                window.location = "/community/communitypanel";
+                window.location = "/communtiy/communitypanel";
             }
         }
     }

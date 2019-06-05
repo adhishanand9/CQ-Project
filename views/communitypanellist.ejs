@@ -330,7 +330,16 @@ a:hover{
          }
       });
    });
-   var join_community=document.getElementById("join_button")
+   var join_button=document.getElementsByClassName('joinbtn');
+   for (var i = 0; i < join_button.length; i++)
+   {
+     join_button[i].addEventListener('click',function(event){
+       console.log(event.target.getAttribute("id"));
+       console.log(communtiydata[1].comname);
+
+     })
+   }
+   var join_community=document.getElementById("join_button");
    join_community.addEventListener('click',function(){
        console.log('I am clicked');
        console.log('<%=communtiydata[0].comname%>');
@@ -364,7 +373,7 @@ a:hover{
            else{
                console.log(dataReturned);
                alert('Data Updated correctly');
-               window.location = '/community/communityprofile/<%=communtiydata[0]._id%>';
+               window.location = '/communtiy/communitypanellist';
            }
        }
 

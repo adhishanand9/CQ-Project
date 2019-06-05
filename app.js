@@ -90,7 +90,8 @@ var communitySchema =mongoose.Schema({
   createdate:String,
   image:String,
   communitystatus:String,
-  communitymembers:Number
+  communitymembers:Number,
+  members:Array
 });
 var tagdetails = mongoose.model('tagdetails',tagSchema );
 var communitydetails = mongoose.model('communitydetails',communitySchema );
@@ -403,8 +404,8 @@ app.put('/updateCommunityDetails',function(req,res){
             _id: req.body._id,
         },
         {
-            communitymembers:req.body.members
-
+            communitymembers:req.body.members,
+            $push: { members: req.session.data[0].email }
         },
         {
             new: true,
@@ -677,6 +678,18 @@ app.get('/community/communityprofile/:id',function(req,res){
       }).exec(function(error,data){
           console.log(data);
           res.render('communityprofile', {communitydata: data,data: req.session.data});
+      });
+  } else {
+      res.redirect('/');
+  }
+})
+app.get('/community/discussion/:id',function(req,res){
+  if(req.session.isLogin){
+      communitydetails.find({
+          _id: req.params.id,
+      }).exec(function(error,data){
+          console.log(data);
+          res.render('discussion', {communitydata: data,data: req.session.data});
       });
   } else {
       res.redirect('/');
