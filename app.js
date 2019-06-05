@@ -69,7 +69,9 @@ var userSchema = mongoose.Schema({
 	role: String,
   status:String,
   flag: String,
-  image: String
+  image: String,
+  joinedcommunities: Array,
+  requestedcommunities: Array,
 });
 
 var userdetails = mongoose.model("userdetails", userSchema);
@@ -91,7 +93,8 @@ var communitySchema =mongoose.Schema({
   image:String,
   communitystatus:String,
   communitymembers:Number,
-  members:Array
+  joinedmembers: Array,
+  requestedmembers: Array,
 });
 var tagdetails = mongoose.model('tagdetails',tagSchema );
 var communitydetails = mongoose.model('communitydetails',communitySchema );
@@ -118,8 +121,8 @@ app.get('/auth/github',
                   email: req.session.passport.user._json.email,
                   city: req.session.passport.user._json.location,
                   status: "pending",
-                  dob: "11/08/1998",
-                  phoneno: "7657897387",
+                  dob: "09/12/1998",
+                  phoneno: "8968327087",
                   gender: "male",
                   image: "default.png",
                   role: "user",
@@ -397,30 +400,71 @@ app.put('/updateUserDetails',function(req,res){
             res.send(error);
         })
 });
-app.put('/updateCommunityDetails',function(req,res){
+app.post('/updateCommunityDetails',function(req,res){
     console.log(req.body);
-        communitydetails.findOneAndUpdate(
-        {
-            _id: req.body._id,
-        },
-        {
-            communitymembers:req.body.members,
-            $push: { members: req.session.data[0].email }
-        },
-        {
+    if(req.session.isLogin){
+        if(req.body.buttontext == "Join"){
+          userdetails.findOneAndUpdate(
+          {
+            _id: req.session.data[0]._id
+          },
+          {
+            $push: {joinedcommunities: req.body.id}
+          },
+          {
             new: true,
             runValidators: true
-        })
-        .then(data=>{
-            req.session.data=[data];
-            console.log(data);
-            res.send(data);
-        })
-        .catch(err=>{
-            console.log('Error');
-            console.error(err);
-            res.send(error);
-        })
+          })
+          .then(data=>{
+          if(data == null)
+					     res.send("Error")
+					else
+          {
+            communitydetails.findOneAndUpdate(
+							{ _id: req.body.id },
+							{$push: {joinedmembers: req.session.data[0]._id},
+              communitymembers:req.body.members
+              },
+							{new: true,
+							runValidators: true}).then(data => {
+							if(data == null)
+							       res.send("Error")
+							else{
+                     res.send("Added");
+              }
+						})
+            }
+                })
+        } else{
+          userdetails.findOneAndUpdate(
+				  {
+            _id: req.session.data[0]._id
+          },
+				  {
+            $push: {requestedcommunities: req.body.id}
+          },
+				  {
+            new: true,
+            runValidators: true})
+          .then(data => {
+          if(data == null)
+            res.send("Error")
+          else{
+            communitydetails.findOneAndUpdate(
+            { _id: req.body.id },
+            {$push: { requestedmembers: req.session.data[0]._id}},
+            {new: true,
+            runValidators: true}).then(data => {
+            if(data == null)
+              res.send("Error");
+            else
+              res.send("Added");
+            })
+
+            }
+			})
+      }
+    }
 });
 //app.post('/getUserData',function(req,res){
 //    console.log("hello world")
@@ -631,7 +675,9 @@ app.post('/community/AddCommunity',function(req,res){
         ownerid: req.session.data[0]._id,
         image: 'default.png',
         communitystatus: 'active',
-        communitymembers: '0',
+        communitymembers: '1',
+        joinedmembers: [req.session.data[0]._id],
+        requestedmembers: [],
     })
     newCommunity.save()
      .then(data => {
@@ -655,18 +701,22 @@ app.get('/tag/tagslist',function(req,res){
 })
 app.get('/communtiy/communitypanel',function(req,res){
   if(req.session.isLogin){
-      communitydetails.find({}).exec(function(error, data) {
-    res.render('communitypanel', {communtiydata: data,data: req.session.data});
-  });
+      communitydetails.find({$or: [
+    {joinedmembers: req.session.data[0]._id},
+    {requestedmembers: req.session.data[0]._id}
+  ]}).then(data => {
+    res.render('communitypanel', {data: req.session.data, communtiydata: data});
+  })
   } else {
       res.redirect('/');
   }
-})
+});
 app.get('/communtiy/communitypanellist',function(req,res){
   if(req.session.isLogin){
-      communitydetails.find({}).exec(function(error, data) {
-    res.render('communitypanellist', {communtiydata: data,data: req.session.data});
-  });
+      communitydetails.find({joinedmembers: {$ne: req.session.data[0]._id},
+          requestedmembers: {$ne: req.session.data[0]._id}}).exec((error, d) => {
+         res.render('communitypanellist', {data: req.session.data, communtiydata: d});
+     })
   } else {
       res.redirect('/');
   }

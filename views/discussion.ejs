@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Community List</title>
+    <title>CQ</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -204,31 +204,7 @@
             font-weight: 200;
             background: #fff;
         }
-        #permission_button_1{
-            margin-top:5px;
-            color: #fff;
-            background-color: #337ab7;
-            border-color: #2e6da4;
-            display: inline-block;
-            padding: 6px 12px;
-            margin-bottom: 0;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.42857143;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: middle;
-            -ms-touch-action: manipulation;
-            touch-action: manipulation;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            background-image: none;
-            border: 1px solid transparent;
-            border-radius: 4px;
-        }
+        
         #members_lower_div{
             height: 40%;
             background: rgb(220,220,220);
@@ -265,45 +241,80 @@
             height: 60px;
 
         }
+        #create_discusion{
+          height:160px;
+          border: 1px solid rgb(200,200,200);
+          width:60%;
+          margin-left:20%;
+          box-shadow: 0px 1px 10px 0px rgb(201, 201, 201);
+        }
+        #create_discusion_top{
+          height:50px;
+        }
+        #create_discusion_middle{
+          height:50px;
+          border-top: 1px solid rgb(200,200,200);
+          border-bottom:1px solid rgb(200,200,200);
+          background-color: #FFFFFF;
+          padding: 5px;
+
+        }
+        #discussion_image{
+          height:40px;
+          width:auto;
+          float:left;
+        }
+        #start_discussion
+        {
+          margin-left: 5%;
+          float:left;
+          padding-bottom: 5%;
+        }
+        #discussion_top_contents
+        {
+          padding-top:5px;
+          padding-left:5px;
+          padding-right: 5px;
+
+        }
+        #discussion_title_input{
+          position:relative;
+          border:0px;
+          margin-left: 5px;
+          width:99%;
+          outline: 0px;
+          font-size: 18px;
+        }
+        #discussion_title_input:focus{
+          border:0px;
+          color:black;
+          font-weight: bold;
+
+
+        }
     </style>
 </head>
 <body>
     <% include partials/menu.html %>
     <div id="community_header_div">
         <div id="community_image_div"><img src="/images/<%=communitydata[0].image%>" id="community_image"></div>
-        <button class="btn" id="permission_button">
-                <% if(communitydata[0].membershiprule == "direct"){ %>
-                    Join
-                <% } else{ %>
-                    Ask To Join
-                <% } %>
-        </button>
+
         <div id="community_name_div"><%=communitydata[0].comname%></div>
     </div>
     <div id="body_internal_div">
-        <div id="members_div">
-                <div id="members_upper_div">
-                        <button id="permission_button_1">
-                                <% if(communitydata[0].membershiprule == "direct"){ %>
-                                    Join
-                                <% } else{ %>
-                                    Ask To Join
-                                <% } %>
-                        </button>
-                </div>
-                <div id="members_lower_div"><%=communitydata[0].communitymembers%> Members</div>
-        </div>
-        <div id="about_community_div">
-            <div id="about_community_upper_div"> About Community</div>
-            <div id="about_community_lower_div"><%=communitydata[0].communitydescription%></div>
-        </div>
-        <div id="managers_div">
-            <div id="managers_top_div">Community Managers</div>
-            <div id="managers_lower_div">
-                <img src="/images/default.png" id="manager_image">
-                <span style="background: #5cb85c" id="role_manager">owner</span>
-                <span style="background: #f0ad4e"><%= data[0].role%></span>
+      <div id="create_discusion">
+          <div id="create_discusion_top">
+            <div id="discussion_top_contents">
+              <img src="/images/<%=communitydata[0].image%>" id="discussion_image">
+              <p id="start_discussion">        Start a discussion</p>
             </div>
+
+          </div>
+          <div id="create_discusion_middle">
+            <input type="text" placeholder="Enter a discussion title..." id="discussion_title_input"></input>
+          </div>
+          <div id="create_discusion_bottom">
+          </div>
         </div>
     </div>
 </body>
@@ -328,7 +339,7 @@
             $("#community_header_div").animate({'padding-left':'250px'},300);
           }else{
             $("#menu").animate({width: '50px'},300);
-            $("#body_internal_div").animate({left:'14%'},300);
+            $("#body_internal_div").animate({left:'8%'},300);
             $("#community_header_div").animate({'padding-left':'15px'},300);
          }
       });

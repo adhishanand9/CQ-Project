@@ -209,7 +209,7 @@
     <% include partials/menu.html %>
     <div id="community_header_div">
         <button class="btn" id="community_panel"><i class="fa fa-group"></i></button>
-        <button class="btn"><i class="fa fa-search"></i></button>
+        <button class="btn" id="community_search_button"><i class="fa fa-search"></i></button>
     </div>
     <div id="body_internal_div">
         <div class="content">
@@ -263,6 +263,10 @@
     var community_panel=document.getElementById("community_panel");
     community_panel.addEventListener('click',function(event){
       window.location = '/communtiy/communitypanel'
+    });
+    var community_search_button = document.getElementById("community_search_button");
+    community_search_button.addEventListener('click',function(){
+        window.location = '/communtiy/communitypanellist';
     });
     create_community_button.addEventListener('click',function(){
         var date = new Date();

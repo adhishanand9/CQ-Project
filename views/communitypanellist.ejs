@@ -276,7 +276,7 @@ a:hover{
             <div class="community_upper_div">
                 <div class="community_image_div_class"><img src="/<%=d.image%>" class="community_image_class"></div>
                 <div class="community_name_div_class"><a href="/community/communityprofile/<%=d._id%>"><%=d.comname%></a></div>
-                <button id="join_button" class="joinbtn">
+                <button class="joinbtn" id="<%=d._id%>" value="<%=d.communitymembers%>">
                         <% if(d.membershiprule == "direct"){ %>
                             Join
                         <% } else{ %>
@@ -330,54 +330,7 @@ a:hover{
          }
       });
    });
-   var join_button=document.getElementsByClassName('joinbtn');
-   for (var i = 0; i < join_button.length; i++)
-   {
-     join_button[i].addEventListener('click',function(event){
-       console.log(event.target.getAttribute("id"));
-       console.log(communtiydata[1].comname);
 
-     })
-   }
-   var join_community=document.getElementById("join_button");
-   join_community.addEventListener('click',function(){
-       console.log('I am clicked');
-       console.log('<%=communtiydata[0].comname%>');
-       var updateCommunity = new Object();
-       updateCommunity._id='<%=communtiydata[0]._id%>';
-       updateCommunity.comname='<%=communtiydata[0].name%>';
-       console.log('<%=communtiydata[0].communitymembers%>');
-       updateCommunity.members=<%=communtiydata[0].communitymembers%>+1;
-       console.log('updateCommunity.members');
-       //updetail.email = '<%= data[0].email%>';
-       // updetail._id = '<%= data[0]._id%>';
-       //updetail.name = document.getElementById('name_input').value;
-       //updetail.dob = document.getElementById('dob_input').value;
-       //updetail.gender = document.getElementById('select_gender').value;
-       //updetail.city = document.getElementById('city_input').value;
-       //updetail.phoneno = document.getElementById('phoneno_input').value;
-       //updetail.journey = document.getElementById('journey_input').value;
-       //updetail.interest = document.getElementById('interest_input').value;
-       //updetail.expectation = document.getElementById('expectation_input').value;
-
-       var request = new XMLHttpRequest();
-       request.open('PUT','/updateCommunityDetails');
-       request.setRequestHeader('Content-Type','application/json');
-       request.send(JSON.stringify(updateCommunity));
-       request.onload = function(){
-           var dataReturned = request.responseText;
-           if(dataReturned==""||dataReturned==null){
-           alert('Error in Updating Details!!!');
-               window.location = '/communtiy/communitypanellist';
-           }
-           else{
-               console.log(dataReturned);
-               alert('Data Updated correctly');
-               window.location = '/communtiy/communitypanellist';
-           }
-       }
-
-   });
    var search_input=document.getElementById('search_input');
    search_input.addEventListener('keyup',function(){
         body_internal_div.innerHTML = "";
@@ -433,6 +386,34 @@ a:hover{
         listItem2.appendChild(fourdiv);
         listItem1.appendChild(listItem2);
          body_internal_div.appendChild(listItem1);
+    }
+    var joinbtns = document.getElementsByClassName('joinbtn');
+    for(var i = 0;i<joinbtns.length;i++) {
+        joinbtns[i].addEventListener("click", event => {
+            console.log(event.target.getAttribute("id"));
+            console.log(event.target.innerHTML.trim());
+            event.target.parentNode.parentNode.style.display = "none";
+            var communitytojoin = new Object();
+            communitytojoin.id = event.target.getAttribute("id");
+            communitytojoin.buttontext = event.target.innerHTML.trim();
+            console.log(event.target.getAttribute("id"));
+            communitytojoin.members=parseInt(event.target.getAttribute("value"))+1;
+            console.log(communitytojoin.members);
+            var request = new XMLHttpRequest();
+            request.open('POST','/updateCommunityDetails');
+            request.setRequestHeader("Content-Type","application/json");
+            request.send(JSON.stringify(communitytojoin));
+
+            request.onload = function(){
+            var dataReturned = request.responseText;
+            if(dataReturned==""||dataReturned==null){
+            alert('Error in joining Community!!!');
+            }else{
+                console.log(dataReturned);
+                alert('Join Request Submitted!!!');
+                }
+            }
+        })
     }
 </script>
 </html>
