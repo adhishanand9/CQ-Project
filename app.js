@@ -271,6 +271,12 @@ app.get("/admin/profile", function(req, res) {
     else
         res.redirect('/')
 })
+app.get("/superadmin/profile", function(req, res) {
+    if(req.session.isLogin)
+        res.render('homepage', {data: req.session.data});
+    else
+        res.redirect('/')
+})
 
 app.get('/changePassword',function(req,res){
     if(req.session.isLogin)
@@ -320,7 +326,7 @@ app.get('/',function(req,res){
         console.log("Already Logged in");
         res.render('homepage',{data: req.session.data});
     } else {
-        console.log("New User");
+        console.log("New User Logging In");
         res.sendFile(path.join(__dirname,'Public','Login.html'));
     }
 });
@@ -501,10 +507,12 @@ app.post('/sendMail',function(req,res){
 });
 
 });
+
 app.post("/updateState", function (request, response) {
 	userdetails.updateOne({_id: request.body.id}, {flag: request.body.state}).exec(data => console.log("state updated"));
 	response.send("state updated");
 });
+
 app.post('/tag',function(req,res){
     console.log(req.body);
     let newTag = new tagdetails({
@@ -673,7 +681,7 @@ app.post('/community/AddCommunity',function(req,res){
         owner: req.session.data[0].name,
         createdate: req.body.createdate,
         ownerid: req.session.data[0]._id,
-        image: 'default.png',
+        image: '/images/defaultcommunity.jpg',
         communitystatus: 'active',
         communitymembers: '1',
         joinedmembers: [req.session.data[0]._id],
@@ -733,6 +741,18 @@ app.get('/community/communityprofile/:id',function(req,res){
       res.redirect('/');
   }
 })
+app.get('/community/manageCommunity/:id',function(req,res){
+  if(req.session.isLogin){
+      communitydetails.find({
+          _id: req.params.id,
+      }).exec(function(error,data){
+          console.log(data);
+          res.render('managecommunity', {communitydata: data,data: req.session.data});
+      });
+  } else {
+      res.redirect('/');
+  }
+})
 app.get('/community/discussion/:id',function(req,res){
   if(req.session.isLogin){
       communitydetails.find({
@@ -754,6 +774,22 @@ app.get('/community/AddCommunity',function(req,res){
   } else {
       res.redirect('/');
   }
+})
+app.get("/community/cancelRequest/:id", function(req, res) {
+	if(req.session.isLogin) {
+		userdetails.findOneAndUpdate({_id: req.session.data[0]._id},{$pullAll: {requestedcommunities: [req.params.id]}}).exec((error, d) => {
+			if(d == null)
+				res.send("error");
+			else {
+				communitydetails.findOneAndUpdate({_id: req.params.id},{$pullAll: {requestedmembers: [req.session.data[0]._id]}}).then(data => {
+					req.session.data = [d];
+					res.render('communitypanel', {data: req.session.data, communtiydata: [data]});
+				})
+			}
+		})
+	}
+	else
+		response.redirect("/");
 })
 app.post('/tag',function(req,res){
     console.log(req.body);

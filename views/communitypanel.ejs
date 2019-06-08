@@ -116,7 +116,7 @@
             width: 65%;
             padding-bottom: 10px;
             height: auto;
-            border: 1px solid #eeeeee;
+            border: 2px solid #eeeeee;
             box-shadow: 0px 1px 10px 0px rgb(201, 201, 201);
             background-color: #FFFFFF;
         }
@@ -228,17 +228,42 @@
             line-height: 1.42857143;
             font-weight: 100;
         }
-        a:link{
+        #name_div:link{
           color:#337ab7;
+          text-decoration: none;
+        }
+        #name_div:visited{
+          color:#337ab7;
+          text-decoration: none;
+        }
+        #name_div:hover{
+          color:black;
           text-decoration: none;
         }
         a:visited{
-          color:#337ab7;
-          text-decoration: none;
+          color:white;
+        }
+        a:link{
+
+          color:white;
         }
         a:hover{
-          color:black;
-          text-decoration: none;
+          color:white;
+        }
+        .btn2{
+          background: green;
+          border: 1px solid #fff;
+          cursor: pointer;
+          color:white;
+          padding: 0;
+
+        }
+        .btn3{
+          background: red;
+          border: 1px solid #fff;
+          cursor: pointer;
+          color:white;
+          padding: 0;
         }
     </style>
 </head>
@@ -257,10 +282,16 @@
           <%communtiydata.forEach(function(d) { %>
 
             <div class="my_community_div_class">
-                    <div class="community_image_div_class"><img src="/images/defaultcommunity.jpg" class="community_image_class"></div>
-                    <div class="community_name_div"><a href="/community/discussion/<%=d._id%>"><%=d.comname%></a></div>
+                    <div class="community_image_div_class"><img src="/<%=d.image%>" class="community_image_class"></div>
+                    <div class="community_name_div"><a href="/community/discussion/<%=d._id%>" id="name_div"><%=d.comname%></a></div>
                     <div class="community_members_div"><%=d.communitymembers%> Members</div>
-
+                    <div style="font-size: 1rem;float:right">
+                      <% if(d.membershiprule == "direct"){ %>
+                        <button class = "btn2" id="manage_Community"><a href="/community/manageCommunity/<%=d._id%>"><i class="fas fa-cogs fa-sm"></i></a></button>
+                        <% } else{ %>
+                        <button class = "btn3" id="cancel_Community"><a href="#"><i class="fas fa-times settingIcon fa-lg" ></i></a></button>
+                        <% } %>
+                    </div>
             </div>
           <%})%>
         </div>
@@ -296,7 +327,7 @@
       $("#sideBtn").click(function(){
          if($("#menu").width() == 50){
             $("#menu").animate({width: '250px'},300);
-            $("#body_internal_div").animate({left:'20%'},300);
+            $("#body_internal_div").animate({left:'24%'},300);
             $("#community_header_div").animate({'padding-left':'250px'},300);
          } else{
             $("#menu").animate({width: '50px'},300);

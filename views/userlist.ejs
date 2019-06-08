@@ -286,14 +286,14 @@
                 <span id="tag">User List</span>
                 <select id="role">
                     <option value="All">All</option>
-                    <option value="Admins">Admins</option>
-                    <option value="Users">Users</option>
-                    <option value="Community Builder">Community Builder</option>
+                    <option value="admin">Admins</option>
+                    <option value="user">Users</option>
+                    <option value="communitybuilder">Community Builder</option>
                 </select>
                 <select id="filter">
                     <option value="All">All</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Confirmed">Confirmed</option>
+                    <option value="pending">Pending</option>
+                    <option value="confirmed">Confirmed</option>
                 </select>
                 <span id="refresh" class="fa fa-refresh">Refresh</span>
         </div>
@@ -456,7 +456,7 @@
 		var emailSendBtn = document.getElementById("sendMail");
 		for(var i = 1;i<roleCol.length;i++ ) {
 			state = asc[i-1].flag;
-			if(roleCol[i].innerHTML == "admin" || roleCol[i].innerHTML == "user" || roleCol[i].innerHTML=='community builder') {
+			if(roleCol[i].innerHTML == "admin" || roleCol[i].innerHTML == "user" || roleCol[i].innerHTML=='communitybuilder') {
 				let emailBtn = document.createElement("button");
 				let editBtn = document.createElement("button");
 				let stateBtn = document.createElement("button");

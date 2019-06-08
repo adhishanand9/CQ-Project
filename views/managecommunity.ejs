@@ -241,55 +241,42 @@
             height: 60px;
 
         }
-        #create_discusion{
-          height:160px;
-          border: 1px solid rgb(200,200,200);
-          width:60%;
-          margin-left:20%;
-          box-shadow: 0px 1px 10px 0px rgb(201, 201, 201);
+        #heading_manage{
+          color:#6F6E6E;
+          font-size: 20px;
+          margin-bottom: 1px;
         }
-        #create_discusion_top{
-          height:50px;
-        }
-        #create_discusion_middle{
-          height:50px;
-          border-top: 1px solid rgb(200,200,200);
-          border-bottom:1px solid rgb(200,200,200);
-          background-color: #FFFFFF;
-          padding:0px;
+.a_header{
+  margin-left: 50px;
+  float:rigt;
+}
+#edit_community{
+  margin-left: 60%;
+}
+.a_header:visited{
+  color:#337ab7;
+  text-decoration: none;
+}
+.a_header:link{
+  color:#337ab7;
+  text-decoration: none;
+}
+.a_header1:visited{
+  color:#337ab7;
+  text-decoration: none;
+}
+.a_header1:link{
+  color:#337ab7;
+  text-decoration: none;
+}
+#count_members{
+  background-color: #FFFFFF;
+  height: 150px;
+  width:20%;
+  padding: 5px;
+  padding-top: 15px;
+}
 
-        }
-        #discussion_image{
-          height:40px;
-          width:auto;
-          float:left;
-        }
-        #start_discussion
-        {
-          margin-left: 5%;
-          float:left;
-          padding-bottom: 5%;
-          color:#878787;
-        }
-        #discussion_top_contents
-        {
-          padding-top:5px;
-          padding-left:5px;
-          padding-right: 5px;
-
-        }
-        #discussion_title_input{
-          border:0px;
-          outline: 0px;
-          font-size: 18px;
-        }
-        #discussion_title_input:focus{
-          border:0px;
-          color:black;
-          font-weight: bold;
-
-
-        }
     </style>
 </head>
 <body>
@@ -300,20 +287,13 @@
         <div id="community_name_div"><%=communitydata[0].comname%></div>
     </div>
     <div id="body_internal_div">
-      <div id="create_discusion">
-          <div id="create_discusion_top">
-            <div id="discussion_top_contents">
-              <img src="/images/<%=communitydata[0].image%>" id="discussion_image">
-              <p id="start_discussion">        Start a discussion</p>
-            </div>
-
-          </div>
-          <div id="create_discusion_middle">
-            <input type="text" placeholder="Enter a discussion title..." id="discussion_title_input"></input>
-          </div>
-          <div id="create_discusion_bottom">
-          </div>
-        </div>
+      <div id="body_internal_header">
+        <p id="heading_manage">Manage Community<a href="#" id="edit_community" class="a_header"> Edit Community</a><a href="#" class="a_header"> Invite Users</a></p>
+        <hr noshade>
+      </div>
+      <div id="count_members">
+        <a class="a_header1" href="#">Users (<%=communitydata[0].communitymembers%>)</a>
+      </div>
     </div>
 </body>
 <script>

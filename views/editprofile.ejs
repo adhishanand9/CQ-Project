@@ -233,6 +233,13 @@
                background:  #337ab7;
                border: 0px;
            }
+           #exampleFormControlFile1{
+             width:100%;
+           }
+           #upload_image_area{
+             width:100%;
+             margin-top:10px;
+           }
        </style>
 </head>
 <body>
@@ -246,8 +253,7 @@
                             <div class="text-center">
                                 <%= typeof msg != 'undefined' ? msg : '' %>
                             </div>
-                            <div class="form-group upload-area">
-                                <label for="exampleFormControlFile1">Click Here To upload Files</label>
+                            <div class="form-group upload-area" id="upload_image_area">
                                 <input type="file" name="files" class="form-control-file" id="exampleFormControlFile1">
                             </div>
                             <div class="form-group">
@@ -348,7 +354,7 @@
             updetail.interest = document.getElementById('interest_input').value;
             updetail.journey = document.getElementById('journey_input').value;
             updetail.expectation = document.getElementById('expectation_input').value;
-
+            updetail.flag='1';
             var request = new XMLHttpRequest();
             request.open('PUT','/updateUserDetails');
             request.setRequestHeader('Content-Type','application/json');

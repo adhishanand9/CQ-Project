@@ -172,8 +172,9 @@
     box-sizing: initial;
   }
   #community_list_icon{
-    height:15x;
-    width:auto;
+    height:70px;
+    width:70px;
+    border: 2px solid green;
   }
   .actions i {
     background-color: #000;
@@ -288,8 +289,8 @@
                   <span id="tag">Community List</span>
                   <select id="filter">
                       <option value="All">All</option>
-                      <option value="Pending">Direct</option>
-                      <option value="Confirmed">Permission</option>
+                      <option value="direct">Direct</option>
+                      <option value="permission">Permission</option>
                   </select>
                   <span id="refresh" class="fa fa-refresh">Refresh</span>
           </div>
@@ -313,8 +314,8 @@
                       <td><%=d.location%></td>
                       <td><%=d.owner%></td>
                       <td><%=d.createdate%></td>
-                      <td class="actions"></td>
-                      <td><img src=/<%=d.image%> id="community_list_icon" height=35px></td>
+                      <td class="actions" align=center></td>
+                      <td align=center><img src=/<%=d.image%> id="community_list_icon" height=35px></td>
                     </tr>
                     <%})%>
                   </tbody>
@@ -352,6 +353,12 @@ for(var i = 0;i<actionBtns.length;i++) {
  var infoBtn = document.createElement("i");
  infoBtn.classList.add("fa", "fa-info");
  actionBtns[i].appendChild(infoBtn);
+ editBtn.addEventListener('click',function(event){
+ alert('Edit Button Clicked');
+ });
+ infoBtn.addEventListener('click',function(event){
+ alert('Info Button Clicked');
+ });
 }
 
 console.log(communtiydata);
