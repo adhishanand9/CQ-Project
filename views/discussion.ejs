@@ -290,6 +290,9 @@
 
 
         }
+        #create_discusion_middle{
+          height:"30px";
+        }
     </style>
 </head>
 <body>
@@ -304,7 +307,7 @@
           <div id="create_discusion_top">
             <div id="discussion_top_contents">
               <img src="/images/<%=communitydata[0].image%>" id="discussion_image">
-              <p id="start_discussion">        Start a discussion</p>
+              <p id="start_discussion">Start a discussion</p>
             </div>
 
           </div>
@@ -327,7 +330,16 @@
     }
     var create=document.getElementById("createCommunity");
     div[2].classList.add("active");
+    var discussion_title=document.getElementById('discussion_title_input');
+    var discussion_body=document.getElementById('create_discusion_middle');
+    discussion_title.addEventListener('click',function(event){
+      console.log('1');
+      create_discusion.style.height="260px";
+      discussion_body.style.height="150px";
+      let div_title=document.createElement('input');
+      discussion_body.appendChild('div_title');
 
+    })
 
     $(document).ready(function(){
       $("#sideBtn").click(function(){
