@@ -34,7 +34,7 @@ var smtpTransport = nodemailer.createTransport({
     host: "smtp.gmail.com",
     auth: {
         user: "adhishanand9@gmail.com",
-        pass: "thebatman@0087"
+        pass: "########"
     }
 });
 //Access Static files
