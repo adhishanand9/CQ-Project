@@ -13,7 +13,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="/trumbowyg.min.js"></script>
   <script>
@@ -187,103 +188,6 @@
   </head>
   <body>
     <% include partials/menu.html %>
-    <div class="modal fade" tabindex="-1" role="dialog" id="editModal">
-  		<div class="modal-dialog" role="document">
-  			<div class="modal-content">
-  			  <div class="modal-header">
-  			    <h5 class="modal-title" id="usernameTitle">Update </h5>
-  			    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  			      <span aria-hidden="true">&times;</span>
-  			    </button>
-  			  </div>
-  			  <div class="modal-body">
-  			    <form>
-  			    	<div class="form-group row">
-  			    		<label class="col-sm-2 col-form-label"><b>Username: </b></label>
-  			    		<div class="col-sm-10">
-  			    			<input type="text" class="form-control" id="editUserName">
-  			    		</div>
-  			    	</div>
-  			    	<div class="form-group row">
-  			    		<label class="col-sm-2 col-form-label"><b>Phone: </b></label>
-  			    		<div class="col-sm-10">
-  			    			<input type="text" class="form-control" id="editPhoneNo">
-  			    		</div>
-  			    	</div>
-  			    	<div class="form-group row">
-  			    		<label class="col-sm-2 col-form-label"><b>City: </b></label>
-  			    		<div class="col-sm-10">
-  			    			<input type="text" class="form-control" id="editCity">
-  			    		</div>
-  			    	</div>
-  			    	<div class="form-group row">
-  			    		<label class="col-sm-2 col-form-label"><b>Status: </b></label>
-  			    		<div class="col-sm-10">
-  			    			<select class="form-control" id="editStatus">
-  			    				<option>Confirmed</option>
-  			    				<option>Pending</option>
-  			    			</select>
-  			    		</div>
-  			    	</div>
-  			    	<div class="form-group row">
-  			    		<label class="col-sm-2 col-form-label"><b>Role: </b></label>
-  			    		<div class="col-sm-10">
-  			    			<select class="form-control" id="editRole">
-  			    				<option>User</option>
-  			    				<option>Community Builder</option>
-  			    				<option>Admin</option>
-  			    			</select>
-  			    		</div>
-  			    	</div>
-  			    	<div class="form-group row">
-  			    		<div class="col-sm-10">
-  			    			<button type="button" class="btn btn-secondary" id="updateBtn">Update</button>
-  			    		</div>
-  			    	</div>
-  			    </form>
-  			  </div>
-  			  <div class="modal-footer">
-  			    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-  			  </div>
-  			</div>
-  		</div>
-  	</div>
-  	<div class="modal fade" tabindex="-1" role="dialog" id="emailModal">
-  		<div class="modal-dialog" role="document">
-  			<div class="modal-content">
-  			  <div class="modal-header">
-  			    <h5 class="modal-title">Send Reminder Mail</h5>
-  			    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  			      <span aria-hidden="true">&times;</span>
-  			    </button>
-  			  </div>
-  			  <div class="modal-body">
-  			    <form>
-  			    	<div class="form-group row">
-  			    		<label class="col-sm-2 col-form-label"><b>To: </b></label>
-  			    		<div class="col-sm-10">
-  			    			<input type="text" readonly class="form-control" id="sendTo">
-  			    		</div>
-  			    	</div>
-  			    	<div class="form-group row">
-  			    		<label class="col-sm-2 col-form-label"><b>Subject: </b></label>
-  			    		<div class="col-sm-10">
-  			    			<input type="text" class="form-control" value="(This mail is from CQ)" id="emailSubject">
-  			    		</div>
-  			    	</div>
-  			    	<div class="form-group row">
-  			    		<div class="col-12">
-  			    			<textarea style="resize: none;" cols="30" rows="10" class="form-control" id="textarea" ></textarea>
-  			    		</div>
-  			    	</div>
-  			    </form>
-  			  </div>
-  			  <div class="modal-footer">
-  			    <button type="button" class="btn btn-secondary" id="sendMail" data-dismiss="modal">Send</button>
-  			  </div>
-  			</div>
-  		</div>
-  	</div>
       <div id="body_div">
           <div id="head-btns">
                   <span id="tag">Community List</span>
@@ -321,6 +225,86 @@
                   </tbody>
           </table>
       </div>
+      <div id="updateModal" class="modal fade" role="dialog" style="z-index:9999;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                     <h3 id="eheading" style="text-align:left;" class="modal-title">Update <span id="nameses"></span></h3>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                        <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <div class="col-lg-5 col-lg-offset-3" style="width:50%;">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-sm-2">Commuity Name:</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" class="form-control" id="username" placeholder="Username" readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-sm-2">Community Status:</label>
+                                                            <div class="col-sm-10">
+                                                                <select class="form-control" id="role">
+                                                                    <option value="Active">Active</option>
+                                                                    <option value="Deactive">Deactive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="form-group">
+                                                            <div class="col-sm-offset-2 col-sm-10" style="text-align:left;">
+                                                                <button class = "btn btn-default" id="editsubmit" data-dismiss="modal" onclick="updateCommunitydetails()">Update</button>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+<!-- Info Modal modal -->
+
+
+<div id="infoModal" class="modal fade" role="dialog" style="z-index:9999;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <div style="display: flex;">
+                                                    <img src="uploads/defaultCommunity.jpg" id="CommunityProfilePic" style="width: 100px;height: 100px;">
+                                                     <h3 id="eheading" style="text-align:left;margin-top: 35px;margin-left: 10px;" class="modal-title">Community <span id="memes"></span></h3>
+                                                     </div>
+                                                </div>
+
+                                                <p style="font-size:15px;font-weight:bold;padding: 10px;">Community Description</p>
+                                                <p id="locInfo" style="font-size:15px;margin-left: 15px;float:left"></p>
+                                                <div id="communityDesc" class="well well-lg" style="word-wrap: break-word;"></div>
+
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
   </body>
@@ -354,11 +338,63 @@ for(var i = 0;i<actionBtns.length;i++) {
  infoBtn.classList.add("fa", "fa-info");
  actionBtns[i].appendChild(infoBtn);
  editBtn.addEventListener('click',function(event){
- alert('Edit Button Clicked');
+ 	$('#updateModal').modal();
  });
  infoBtn.addEventListener('click',function(event){
- alert('Info Button Clicked');
+ $('#infoModal').modal();
+ updateCommunity()
  });
+}
+
+function updateCommunity(ides,namess,statuses)
+{
+		var nameses = document.getElementById("nameses");
+		nameses.innerHTML = namess;
+
+		 $('#username').val(namess);
+		 document.getElementById('role').value=statuses;
+
+		 obj2 = new Object();
+		 obj2.name = namess;
+		 obj2._id = ides;
+}
+
+function updateCommunitydetails()
+{
+	obj2.status = document.getElementById('role').value;
+	var request = new XMLHttpRequest();
+			request.open('POST', '/updatecommunitydetails');
+			request.setRequestHeader("Content-Type","application/json");
+			request.send(JSON.stringify(obj2))
+			request.addEventListener("load",function()
+        	{
+         		 console.log(request.responseText);
+
+        	});
+	table.ajax.reload(null, false);
+}
+
+function InfoCommunity(ides)
+{
+	$(document).on("click", "#infobut", function() {
+	  	d = $(this).parent().parent()[0].children;
+	  	var html = d[6].innerHTML;
+
+		var re = /<img[^>]+src="http:\/\/([^">]+)/g
+		var results = re.exec(html);
+
+		// var source = results[0];
+
+
+
+   		console.log(results)
+		var memes = document.getElementById("memes");
+		memes.innerHTML = d[0].innerHTML;
+
+		 //document.getElementById("CommunityProfilePic").src=d[6].innerHTML;
+  //   document.getElementById("locInfo").innerHTML=descrip;
+   })
+
 }
 
 console.log(communtiydata);

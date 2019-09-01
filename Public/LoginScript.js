@@ -22,17 +22,17 @@ loginBtn.addEventListener('click',function(event){
                 userName.value="";
                 passWord.value="";
             } else {
-                if(dataReturned[0].flag=='0'){
-                    window.location = "/editprofile"
-                }
-                else if(dataReturned[0].role === 'admin')
-                window.location = dataReturned[0].role + "/profile";
-                else if(dataReturned[0].status === 'pending')
-                window.location = "editprofile"
-                else if(dataReturned[0].role === 'user')
-                window.location = "/communtiy/communitypanel";
-                else if(dataReturned[0].role === 'communitybuilder')
-                window.location = "/communtiy/communitypanel";
+              if(dataReturned[0].flag=='0'){
+                  window.location = "/404notfound"
+              }
+              else if(dataReturned[0].role === 'admin')
+              window.location = dataReturned[0].role + "/profile";
+              else if(dataReturned[0].status === 'pending')
+              window.location = "editprofile"
+              else if(dataReturned[0].role === 'user')
+              window.location = "/profile";
+              else if(dataReturned[0].role === 'communitybuilder')
+              window.location = "/communtiy/communitypanel";
             }
         }
     }

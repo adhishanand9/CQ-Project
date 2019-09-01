@@ -34,7 +34,7 @@ var smtpTransport = nodemailer.createTransport({
     host: "smtp.gmail.com",
     auth: {
         user: "adhishanand9@gmail.com",
-        pass: "########"
+        pass: "Thebatman@0087"
     }
 });
 //Access Static files
@@ -102,7 +102,7 @@ app.get('/auth/github',
   passport.authenticate('github'));
 
   app.get('/auth/github/callback',
-    passport.authenticate('github', { failureRedirect: '/login.html' }),
+    passport.authenticate('github', { failureRedirect: '/Login.html' }),
     function(req, res) {
       // Successful authentication, redirect home.
       userdetails.find({
@@ -114,7 +114,7 @@ app.get('/auth/github',
               req.session.passWord = data.password;
               req.session.data = data;
               req.session.data.image = "default.png"
-              res.redirect('/' + data[0].role + '/profile');
+              res.redirect('/profile');
           } else{
               var data = new Object({
                   name: req.session.passport.user._json.name,
@@ -206,6 +206,7 @@ app.post('/upload', (req, res) => {
 
     })
 })
+
 app.post('/uploadCommunity', (req, res) => {
 
     upload2(req, res, (err) => {
@@ -254,7 +255,12 @@ app.post('/login',function(req,res){
         res.send(data);
     });
 });
-
+app.post('/deleteCommunity',function(req,res){
+  console.log(1);
+  console.log(req.body.userName);
+  //console.log(data);
+  //res.send(data);
+});
 app.get("/admin/userlist",function(req,res){
     if(req.session.isLogin){
         userdetails.find({}).exec(function(error, data) {
@@ -681,7 +687,7 @@ app.post('/community/AddCommunity',function(req,res){
         owner: req.session.data[0].name,
         createdate: req.body.createdate,
         ownerid: req.session.data[0]._id,
-        image: '/images/defaultcommunity.jpg',
+        image: 'images/defaultcommunity.jpg',
         communitystatus: 'active',
         communitymembers: '1',
         joinedmembers: [req.session.data[0]._id],
@@ -808,6 +814,16 @@ app.post('/tag',function(req,res){
         res.send(error)
     })
 });
+
+app.use('/404notfound',function(req,res){
+    if(req.session.isLogin){
+        req.session.isLogin = 0;
+        res.sendFile(path.join(__dirname,'Public','404.html'));
+    } else {
+        res.redirect('/');
+    }
+})
+
 
 app.listen(8000);
 

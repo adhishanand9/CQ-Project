@@ -109,7 +109,8 @@
             line-height: 30%;
         }
         #user_icon{
-            width: auto;
+            width:100%;
+            height: auto;
         }
         #profile_div{
             padding:0;
@@ -251,16 +252,16 @@
     var edit_button = document.getElementById("edit_button");
 
     $(document).ready(function(){
-        $("#sideBtn").click(function(){
-           if($("#menu").width() == 50){
-              $("#menu").animate({width: '250px'},250);
-              $("#body_internal_div").animate({left:'24%'},300);
-           } else{
-              $("#menu").animate({width: '50px'},400);
-              $("#body_internal_div").animate({left:'18%'},300);
-              }
-          });
-      });
+      $("#sideBtn").click(function(){
+         if($("#menu").width() == 50){
+            $("#menu").animate({width: '250px'},250);
+            $("#body_internal_div").animate({left:'30%'},300);
+         } else{
+            $("#menu").animate({width: '50px'},400);
+            $("#body_internal_div").animate({left:'20%'},300);
+            }
+        });
+    });
 
     profile_button.addEventListener("click",function(event){
         window.location = '/profile'

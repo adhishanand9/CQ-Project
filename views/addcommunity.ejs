@@ -281,6 +281,8 @@
             newcommunity.membershiprule = "direct";
         }else if(document.getElementById('permission').checked) {
             newcommunity.membershiprule = "permission";
+        }else{
+          newcommunity.membershiprule = "direct";
         }
         var request = new XMLHttpRequest();
         request.open('POST','/community/AddCommunity');
