@@ -412,6 +412,65 @@ app.put('/updateUserDetails',function(req,res){
             res.send(error);
         })
 });
+app.post('/showcommunity' , function(req, res) {
+
+  console.log(req.body.status)
+
+
+    let query = {};
+    let params = {};
+
+    if(req.body.status === 'direct')
+        query = {rule: req.body.status};
+    else if(req.body.status === 'permission')
+        query = {rule: req.body.status};
+
+    if(req.body.search.value)
+    {
+        query.name = {"$regex" : req.body.search.value , "$options" : "i"};
+    }
+
+    let sortingType;
+    if(req.body.order[0].dir === 'asc')
+        sortingType = 1;
+    else
+        sortingType = -1;
+
+    if(req.body.order[0].column === '0')
+        params = {skip : parseInt(req.body.start), limit : parseInt(req.body.length), sort : {comname : sortingType}};
+    else if(req.body.order[0].column === '2')
+        params = {skip : parseInt(req.body.start), limit : parseInt(req.body.length), sort : {location : sortingType}};
+    else if(req.body.order[0].column === '3')
+        params = {skip : parseInt(req.body.start), limit : parseInt(req.body.length), sort : {owner : sortingType}};
+    else if(req.body.order[0].column === '4')
+        params = {skip : parseInt(req.body.start), limit : parseInt(req.body.length), sort : {createdate : sortingType}};
+
+    communitydetails.find(query, {}, params, function (err, data)
+    {
+        if(err)
+            console.log(err);
+        else
+        {
+            communitydetails.countDocuments(query, function(err , filteredCount)
+            {
+                if(err)
+                    console.log(err);
+                else
+                {
+                    communitydetails.countDocuments(function (err, totalCount)
+                    {
+                        if(err)
+                            console.log(err);
+                        else
+                            res.send({"recordsTotal": totalCount,
+                                "recordsFiltered": filteredCount, data});
+                    })
+                }
+              });
+        }
+    });
+})
+
 app.post('/updateCommunityDetails',function(req,res){
     console.log(req.body);
     if(req.session.isLogin){
@@ -713,6 +772,47 @@ app.get('/tag/tagslist',function(req,res){
         res.redirect('/');
     }
 })
+app.post('/deleteTag/:id',function(req,res){
+  if(req.session.isLogin){
+    tagdetails.deleteOne({ _id: req.params.id }, function (err) {
+  if (err) return handleError(err);
+  tagdetails.find({}).exec(function(error, data) {
+res.render('tagslist', {tagdata: data,data: req.session.data});
+//console.log(tagdata);
+});
+  // deleted at most one tank document
+});
+  } else {
+    res.redirect('/');
+  }
+})
+app.post('/addRequest', function (req, res)
+{
+    if(!req.session.isLogin)
+        return;
+
+    communitydetails.updateOne({_id: req.body.communityId}, {$push: {requestedmembers: req.session.data[0]._id}}, function(err)
+    {
+        if(err)
+            console.log(err);
+        else
+            res.send('DONE');
+    });
+});
+app.post('/addCommunityUser', function (req, res)
+{
+    if(!req.session.isLogin)
+        return;
+
+    communitydetails.updateOne({_id: req.body.communityId}, {$push: {joinedmembers: req.session.data[0]._id}}, function(err)
+    {
+        if(err)
+            console.log(err);
+        else
+            res.send('DONE');
+    });
+});
+
 app.get('/communtiy/communitypanel',function(req,res){
   if(req.session.isLogin){
       communitydetails.find({$or: [
@@ -735,6 +835,49 @@ app.get('/communtiy/communitypanellist',function(req,res){
       res.redirect('/');
   }
 })
+app.post('/getSearchCommunities', function(req, res)
+{
+
+    if(req.session.isLogin){
+      communitydetails.find({ $and:[{'ownerid': {$ne: req.session.data[0]._id}}, {'joinedmembers': {$nin: [req.session.data[0]._id]}},
+              {'requestedmembers': {$nin: [req.session.data[0]._id]}},
+              {'communitystatus': {$ne: 'deactive'}}] })
+          .skip(req.body.skip).limit(6).exec( function (err, data)
+      {
+          if(err)
+          {
+              console.log(err);
+              res.send('ERROR');
+          }
+          else if(data.length === 0)
+              res.send('DONE');
+          else
+              res.send(data);
+      })
+    }else{
+      res.redirect('/')
+    }
+
+});
+
+app.post("/deleteCommunity/:id", function(req, res) {
+	if(req.session.isLogin) {
+		userdetails.findOneAndUpdate({_id: req.session.data[0]._id},{$pullAll: {requestedcommunities: [req.params.id]}}).exec((error, d) => {
+			if(d == null)
+				res.send("error");
+			else {
+				communitydetails.findOneAndUpdate({_id: req.params.id},{$pullAll: {requestedmembers: [req.session.data[0]._id]}}).then(data => {
+					req.session.data = [d];
+					res.render('communitypanel', {data: req.session.data, communtiydata: [data]});
+				})
+			}
+		})
+	}
+	else
+		response.redirect("/");
+})
+
+
 app.get('/community/communityprofile/:id',function(req,res){
   if(req.session.isLogin){
       communitydetails.find({
@@ -797,6 +940,19 @@ app.get("/community/cancelRequest/:id", function(req, res) {
 	else
 		response.redirect("/");
 })
+app.post('/updatecommunitydetails1', function(req,res) {
+  console.log(req.body);
+        communitydetails.updateOne( { "_id" : req.body._id}, {$set : req.body } , function(err,result)
+        {
+          if(err)
+          throw err
+          else
+          {
+            res.send("DATA UPDATED SUCCESFULLY")
+          }
+        })
+})
+
 app.post('/tag',function(req,res){
     console.log(req.body);
     let newTag = new tagdetails({

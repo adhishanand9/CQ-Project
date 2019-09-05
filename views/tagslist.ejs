@@ -161,6 +161,15 @@
 						margin: 0;
 						box-sizing: initial;
 					}
+          .btn3{
+            background: red;
+            border: 2px solid #fff;
+            cursor: pointer;
+            color:white;
+            padding: 0;
+            height: 30px;
+            width:30px;
+          }
     </style>
 </head>
 <body>
@@ -282,7 +291,7 @@
                       <td><%=d.tagname%></td>
 											<td><%=d.creator%></td>
 											<td><%=d.creationdate%></td>
-											<td>hello world</td>
+											<td><form  method="POST" action="/deleteTag/<%=d._id%>"><button class = "btn3" id="delete_tag"><i class="fas fa-times settingIcon fa-lg" ></i></button></form></td>
                       </tr>
 										<%})%>
                 </tbody>
